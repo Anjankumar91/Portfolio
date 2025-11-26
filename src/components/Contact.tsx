@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText, Send } from "lucide-react";
 
@@ -40,8 +40,8 @@ export const Contact = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {contactLinks.map((link) => (
-            <Card key={link.label} className="bg-card border-border hover:border-primary/50 transition-colors">
-              <CardContent className="p-6">
+            <GlowCard key={link.label} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-colors">
+              <div className="col-span-full">
                 <a 
                   href={link.href}
                   target={link.label !== "Email" ? "_blank" : undefined}
@@ -59,13 +59,13 @@ export const Contact = () => {
                   </div>
                   <Send className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                 </a>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
 
-        <Card className="bg-card border-border">
-          <CardContent className="p-8 text-center">
+        <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8 text-center">
+          <div className="col-span-full">
             <p className="text-muted-foreground mb-4">
               Interested in collaborating or have a question?
             </p>
@@ -75,8 +75,8 @@ export const Contact = () => {
                 Send an Email
               </a>
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </GlowCard>
       </div>
     </section>
   );

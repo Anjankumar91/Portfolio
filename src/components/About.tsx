@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 export const About = () => {
   useEffect(() => {
@@ -15,8 +15,8 @@ export const About = () => {
     <section id="about" className="relative py-20 px-4">
       <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl font-bold mb-12 text-center">About Me</h2>
-        <Card className="bg-card/95 backdrop-blur-sm border-border">
-          <CardContent className="p-8">
+        <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8">
+          <div className="col-span-full">
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
               I'm a passionate data analyst with expertise in transforming complex datasets into 
               clear, actionable insights. With a strong foundation in business intelligence and 
@@ -32,8 +32,8 @@ export const About = () => {
               When I'm not analyzing data, you can find me writing about data analytics on Medium, 
               contributing to open-source projects, or exploring new visualization techniques.
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </GlowCard>
       </div>
     </section>
   );
