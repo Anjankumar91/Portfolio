@@ -1,10 +1,20 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
+import { renderCanvas } from "@/components/ui/canvas";
 
 export const Hero = () => {
+  useEffect(() => {
+    renderCanvas();
+  }, []);
+
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center pt-16 px-4">
-      <div className="container mx-auto text-center">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
+      <canvas
+        className="pointer-events-none absolute inset-0 z-0"
+        id="canvas"
+      ></canvas>
+      <div className="container mx-auto text-center relative z-10">
         <div className="animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent">
             Your Name
