@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, BarChart3 } from "lucide-react";
 
@@ -33,18 +33,18 @@ export const Dashboards = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dashboards.map((dashboard) => (
-            <Card key={dashboard.title} className="bg-card border-border hover:border-primary/50 transition-all hover:shadow-glow">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-2">
-                  <BarChart3 className="h-5 w-5 text-primary" />
+            <GlowCard key={dashboard.title} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-all">
+              <div className="col-span-full flex flex-col gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <BarChart3 className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{dashboard.title}</h3>
+                  <p className="text-muted-foreground text-sm">
+                    {dashboard.description}
+                  </p>
                 </div>
-                <CardTitle className="text-xl">{dashboard.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {dashboard.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2 mb-4">
+                <div className="space-y-2">
                   {dashboard.metrics.map((metric) => (
                     <div key={metric} className="flex items-center gap-2">
                       <div className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -52,14 +52,14 @@ export const Dashboards = () => {
                     </div>
                   ))}
                 </div>
-                <Button asChild className="w-full" variant="outline">
+                <Button asChild className="w-full mt-auto" variant="outline">
                   <a href={dashboard.link} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Dashboard
                   </a>
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
       </div>

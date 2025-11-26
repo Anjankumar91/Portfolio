@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Award } from "lucide-react";
 
 const certificates = [
@@ -32,19 +32,17 @@ export const Certificates = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {certificates.map((cert) => (
-            <Card key={cert.title} className="bg-card border-border hover:border-primary/50 transition-colors">
-              <CardHeader>
-                <div className="flex items-start justify-between mb-2">
+            <GlowCard key={cert.title} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-colors">
+              <div className="col-span-full">
+                <div className="flex items-start justify-between mb-4">
                   <Award className="h-6 w-6 text-primary" />
                   <span className="text-sm text-muted-foreground">{cert.date}</span>
                 </div>
-                <CardTitle className="text-lg">{cert.title}</CardTitle>
-                <CardDescription className="text-primary font-medium">{cert.issuer}</CardDescription>
-              </CardHeader>
-              <CardContent>
+                <h3 className="text-lg font-semibold mb-2">{cert.title}</h3>
+                <p className="text-primary font-medium mb-3">{cert.issuer}</p>
                 <p className="text-sm text-muted-foreground">{cert.description}</p>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
       </div>

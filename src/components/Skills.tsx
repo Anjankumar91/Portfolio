@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 const skillCategories = [
   {
@@ -27,11 +27,9 @@ export const Skills = () => {
         <h2 className="text-4xl font-bold mb-12 text-center">Skills & Expertise</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {skillCategories.map((category) => (
-            <Card key={category.title} className="bg-card border-border hover:border-primary/50 transition-colors">
-              <CardHeader>
-                <CardTitle className="text-xl text-primary">{category.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <GlowCard key={category.title} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-colors">
+              <div className="col-span-full">
+                <h3 className="text-xl text-primary font-semibold mb-4">{category.title}</h3>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill) => (
                     <Badge key={skill} variant="secondary" className="bg-muted text-foreground">
@@ -39,8 +37,8 @@ export const Skills = () => {
                     </Badge>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
       </div>

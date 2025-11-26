@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 
@@ -36,22 +36,22 @@ export const Projects = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <Card key={project.title} className="bg-card border-border hover:border-primary/50 transition-all hover:shadow-glow">
-              <CardHeader>
-                <CardTitle className="text-xl">{project.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2 mb-4">
+            <GlowCard key={project.title} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-all">
+              <div className="col-span-full flex flex-col gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground text-sm">
+                    {project.description}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span key={tag} className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-auto">
                   <Button asChild size="sm" variant="outline" className="flex-1">
                     <a href={project.demoLink} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
@@ -64,8 +64,8 @@ export const Projects = () => {
                     </a>
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
       </div>

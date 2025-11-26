@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { Trophy, Users, TrendingUp, Award } from "lucide-react";
 
 const achievements = [
@@ -34,8 +34,8 @@ export const Achievements = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {achievements.map((achievement) => (
-            <Card key={achievement.title} className="bg-card border-border hover:border-primary/50 transition-colors text-center">
-              <CardContent className="pt-6">
+            <GlowCard key={achievement.title} customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 hover:border-primary/50 transition-colors text-center">
+              <div className="col-span-full flex flex-col items-center">
                 <div className="flex justify-center mb-4">
                   <div className="p-3 bg-primary/10 rounded-full">
                     <achievement.icon className="h-8 w-8 text-primary" />
@@ -43,8 +43,8 @@ export const Achievements = () => {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{achievement.title}</h3>
                 <p className="text-sm text-muted-foreground">{achievement.description}</p>
-              </CardContent>
-            </Card>
+              </div>
+            </GlowCard>
           ))}
         </div>
       </div>
