@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import { renderCanvas } from "@/components/ui/canvas";
+import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 
 export const Hero = () => {
   useEffect(() => {
@@ -16,9 +17,27 @@ export const Hero = () => {
       ></canvas>
       <div className="container mx-auto text-center relative z-10">
         <div className="animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-accent bg-clip-text text-transparent">
-            Your Name
-          </h1>
+          <div className="text-5xl md:text-7xl font-bold mb-6 h-20 md:h-28 flex items-center justify-center">
+            <VaporizeTextCycle
+              texts={["Your Name"]}
+              font={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "70px",
+                fontWeight: 700
+              }}
+              color="rgb(255, 255, 255)"
+              spread={5}
+              density={5}
+              animation={{
+                vaporizeDuration: 2,
+                fadeInDuration: 1,
+                waitDuration: 0.5
+              }}
+              direction="left-to-right"
+              alignment="center"
+              tag={Tag.H1}
+            />
+          </div>
           <p className="text-xl md:text-2xl text-muted-foreground mb-4">
             Data Analyst | Business Intelligence Developer
           </p>
