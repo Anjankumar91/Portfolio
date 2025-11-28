@@ -35,6 +35,33 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  // Scroll spy - update active tab based on visible section
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = items.map(item => ({
+        name: item.name,
+        element: document.querySelector(item.url)
+      })).filter(section => section.element)
+
+      const scrollPosition = window.scrollY + 150 // Offset for navbar height
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i]
+        if (section.element) {
+          const sectionTop = (section.element as HTMLElement).offsetTop
+          if (scrollPosition >= sectionTop) {
+            setActiveTab(section.name)
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    handleScroll() // Initial check
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [items])
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
     e.preventDefault()
     setActiveTab(item.name)
