@@ -39,10 +39,17 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     e.preventDefault()
     setActiveTab(item.name)
     
-    // Smooth scroll to section
+    // Smooth scroll to section with offset for navbar
     const element = document.querySelector(item.url)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      const navbarHeight = 100 // Account for fixed navbar height
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - navbarHeight
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      })
     }
   }
 
