@@ -83,7 +83,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   if (!mounted) return null
 
   return (
-    <div className="sticky top-0 left-0 right-0 z-[9999] py-4 bg-background/80 backdrop-blur-sm">
+    <div className="sticky top-0 left-0 right-0 z-[9999] pt-16 pb-4 bg-background/80 backdrop-blur-sm overflow-visible">
       <div className="flex justify-center">
         <motion.div 
           className="flex items-center gap-3 bg-black/50 border border-white/10 backdrop-blur-lg py-2 px-2 rounded-full shadow-lg relative"
