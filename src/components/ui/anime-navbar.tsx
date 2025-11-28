@@ -42,7 +42,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     // Smooth scroll to section with offset for navbar
     const element = document.querySelector(item.url)
     if (element) {
-      const navbarHeight = 100 // Account for fixed navbar height
+      const navbarHeight = 80 // Account for sticky navbar height
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
       const offsetPosition = elementPosition - navbarHeight
       
@@ -56,8 +56,8 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   if (!mounted) return null
 
   return (
-    <div className="fixed top-5 left-0 right-0 z-[9999]">
-      <div className="flex justify-center pt-6">
+    <div className="sticky top-0 left-0 right-0 z-[9999] py-4 bg-background/80 backdrop-blur-sm">
+      <div className="flex justify-center">
         <motion.div 
           className="flex items-center gap-3 bg-black/50 border border-white/10 backdrop-blur-lg py-2 px-2 rounded-full shadow-lg relative"
           initial={{ y: -20, opacity: 0 }}
