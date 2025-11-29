@@ -1,6 +1,6 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Award } from "lucide-react";
-import { DottedSurface } from "@/components/ui/dotted-surface";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 const certificates = [
   {
@@ -26,7 +26,9 @@ const certificates = [
 export const Certificates = () => {
   return (
     <section id="certificates" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
-      <DottedSurface />
+      <div className="absolute inset-0 -z-10">
+        <SpiralAnimation />
+      </div>
       <div className="container mx-auto max-w-6xl relative z-10">
         <h2 className="text-4xl font-bold mb-4 text-center">Job Simulation Certificates</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { DottedSurface } from "@/components/ui/dotted-surface";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 const skillCategories = [
   {
@@ -24,7 +24,9 @@ const skillCategories = [
 export const Skills = () => {
   return (
     <section id="skills" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
-      <DottedSurface />
+      <div className="absolute inset-0 -z-10">
+        <SpiralAnimation />
+      </div>
       <div className="container mx-auto max-w-6xl relative z-10">
         <h2 className="text-4xl font-bold mb-12 text-center">Skills & Expertise</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
