@@ -1,12 +1,14 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Download, FileText } from "lucide-react";
-import { DottedSurface } from "@/components/ui/dotted-surface";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 export const Resume = () => {
   return (
     <section id="resume" className="py-20 px-4 relative overflow-hidden">
-      <DottedSurface />
+      <div className="absolute inset-0 -z-10">
+        <SpiralAnimation />
+      </div>
       <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl font-bold mb-12 text-center">Resume</h2>
         <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8">

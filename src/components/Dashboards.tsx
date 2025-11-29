@@ -1,7 +1,7 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, BarChart3 } from "lucide-react";
-import { DottedSurface } from "@/components/ui/dotted-surface";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 const dashboards = [
   {
@@ -27,7 +27,9 @@ const dashboards = [
 export const Dashboards = () => {
   return (
     <section id="dashboards" className="py-20 px-4 relative overflow-hidden">
-      <DottedSurface />
+      <div className="absolute inset-0 -z-10">
+        <SpiralAnimation />
+      </div>
       <div className="container mx-auto max-w-6xl relative z-10">
         <h2 className="text-4xl font-bold mb-4 text-center">Power BI Dashboards</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
