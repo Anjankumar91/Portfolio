@@ -1,18 +1,10 @@
-import { useEffect } from "react";
 import { GlowCard } from "@/components/ui/spotlight-card";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 
 export const About = () => {
-  useEffect(() => {
-    // Canvas is already initialized by Hero, so we just ensure it exists
-    const canvas = document.getElementById("canvas");
-    if (!canvas) {
-      // If canvas doesn't exist (user navigated directly to this section), we don't need it here
-      // since it's primarily for the hero section
-    }
-  }, []);
-
   return (
-    <section id="about" className="relative py-20 px-4">
+    <section id="about" className="relative py-20 px-4 overflow-hidden">
+      <DottedSurface />
       <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl font-bold mb-12 text-center">About Me</h2>
         <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8">

@@ -1,7 +1,7 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText, Send } from "lucide-react";
-import { BackgroundPaths } from "@/components/ui/background-paths";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 
 const contactLinks = [
   {
@@ -33,7 +33,7 @@ const contactLinks = [
 export const Contact = () => {
   return (
     <section id="contact" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
-      <BackgroundPaths />
+      <DottedSurface />
       <div className="container mx-auto max-w-4xl relative z-10">
         <h2 className="text-4xl font-bold mb-4 text-center">Get In Touch</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">

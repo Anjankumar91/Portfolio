@@ -1,6 +1,6 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Trophy, Users, TrendingUp, Award } from "lucide-react";
-import { EtheralShadow } from "@/components/ui/etheral-shadow";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 
 const achievements = [
   {
@@ -28,12 +28,7 @@ const achievements = [
 export const Achievements = () => {
   return (
     <section id="achievements" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
-      <EtheralShadow
-        color="rgba(128, 128, 128, 0.5)"
-        animation={{ scale: 100, speed: 90 }}
-        noise={{ opacity: 0.5, scale: 1.2 }}
-        sizing="fill"
-      />
+      <DottedSurface />
       <div className="container mx-auto max-w-6xl relative z-10">
         <h2 className="text-4xl font-bold mb-4 text-center">Achievements</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">

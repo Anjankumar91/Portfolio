@@ -1,7 +1,7 @@
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
-import ShaderBackground from "@/components/ui/shader-background";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 
 const projects = [
   {
@@ -30,7 +30,7 @@ const projects = [
 export const Projects = () => {
   return (
     <section id="projects" className="py-20 px-4 relative overflow-hidden">
-      <ShaderBackground />
+      <DottedSurface />
       <div className="container mx-auto max-w-6xl relative z-10">
         <h2 className="text-4xl font-bold mb-4 text-center">Projects</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
