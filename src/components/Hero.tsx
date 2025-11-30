@@ -1,13 +1,65 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import { renderCanvas } from "@/components/ui/canvas";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
+import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
 
 export const Hero = () => {
   useEffect(() => {
     renderCanvas();
   }, []);
+
+  // Premium animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    },
+  };
+
+  const socialVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 1.2 + i * 0.1,
+        duration: 0.5,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    }),
+  };
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
@@ -15,8 +67,19 @@ export const Hero = () => {
         className="pointer-events-none absolute inset-0 z-0"
         id="canvas"
       ></canvas>
-      <div className="container mx-auto text-center relative z-10">
-        <div className="animate-fade-in">
+      
+      {/* Luxury ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+      </div>
+
+      <motion.div 
+        className="container mx-auto text-center relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
           <div className="text-5xl md:text-7xl font-bold mb-6 h-20 md:h-28 flex items-center justify-center">
             <VaporizeTextCycle
               texts={["Your Name"]}
@@ -38,47 +101,90 @@ export const Hero = () => {
               tag={Tag.H1}
             />
           </div>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-            Data Analyst | Business Intelligence Developer
-          </p>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Transforming data into actionable insights. Specialized in Power BI, data visualization, 
-            and analytics solutions that drive business decisions.
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Button asChild className="bg-primary hover:bg-primary/90">
-              <a href="#contact">Get In Touch</a>
-            </Button>
-            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <a href="#projects">View My Work</a>
-            </Button>
-          </div>
+        </motion.div>
 
-          <div className="flex justify-center gap-4">
-            <Button asChild variant="ghost" size="icon" className="hover:text-primary">
-              <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
-                <Github className="h-5 w-5" />
-              </a>
+        <motion.p 
+          className="text-xl md:text-2xl text-muted-foreground mb-4"
+          variants={itemVariants}
+        >
+          Data Analyst | Business Intelligence Developer
+        </motion.p>
+
+        <motion.p 
+          className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8"
+          variants={itemVariants}
+        >
+          Transforming data into actionable insights. Specialized in Power BI, data visualization, 
+          and analytics solutions that drive business decisions.
+        </motion.p>
+        
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4 mb-8"
+          variants={itemVariants}
+        >
+          <MagneticHover>
+            <Button asChild className="bg-primary hover:bg-primary/90 btn-shine relative overflow-hidden">
+              <motion.a 
+                href="#contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get In Touch
+              </motion.a>
             </Button>
-            <Button asChild variant="ghost" size="icon" className="hover:text-primary">
-              <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="h-5 w-5" />
-              </a>
+          </MagneticHover>
+          <MagneticHover>
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 btn-shine relative overflow-hidden">
+              <motion.a 
+                href="#projects"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View My Work
+              </motion.a>
             </Button>
-            <Button asChild variant="ghost" size="icon" className="hover:text-primary">
-              <a href="mailto:your.email@example.com">
-                <Mail className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button asChild variant="ghost" size="icon" className="hover:text-primary">
-              <a href="https://medium.com/@yourusername" target="_blank" rel="noopener noreferrer">
-                <FileText className="h-5 w-5" />
-              </a>
-            </Button>
-          </div>
+          </MagneticHover>
+        </motion.div>
+
+        <div className="flex justify-center gap-4 mb-12">
+          {[
+            { Icon: Github, href: "https://github.com/yourusername" },
+            { Icon: Linkedin, href: "https://linkedin.com/in/yourusername" },
+            { Icon: Mail, href: "mailto:your.email@example.com" },
+            { Icon: FileText, href: "https://medium.com/@yourusername" },
+          ].map((social, i) => (
+            <motion.div
+              key={social.href}
+              custom={i}
+              variants={socialVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <MagneticHover>
+                <Button asChild variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-all duration-300">
+                  <motion.a 
+                    href={social.href} 
+                    target={social.Icon !== Mail ? "_blank" : undefined}
+                    rel={social.Icon !== Mail ? "noopener noreferrer" : undefined}
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <social.Icon className="h-5 w-5" />
+                  </motion.a>
+                </Button>
+              </MagneticHover>
+            </motion.div>
+          ))}
         </div>
-      </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <ScrollIndicator />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
