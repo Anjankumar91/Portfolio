@@ -3,6 +3,7 @@ import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Download, FileText } from "lucide-react";
 import { SpiralAnimation } from "@/components/ui/spiral-animation";
+import Aurora from "@/components/ui/aurora";
 import { MotionReveal, MagneticHover } from "@/components/ui/motion-wrapper";
 
 export const Resume = () => {
@@ -29,6 +30,9 @@ export const Resume = () => {
     <section id="resume" className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <SpiralAnimation />
+      </div>
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <Aurora colorStops={["#3A29FF", "#FF94B4", "#FF3232"]} blend={0.5} amplitude={1.0} speed={0.5} />
       </div>
 
       {/* Premium ambient lighting */}

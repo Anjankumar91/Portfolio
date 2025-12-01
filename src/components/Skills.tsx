@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { SpiralAnimation } from "@/components/ui/spiral-animation";
+import Aurora from "@/components/ui/aurora";
 import { MotionReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion-wrapper";
 
 const skillCategories = [
@@ -55,6 +56,9 @@ export const Skills = () => {
     <section id="skills" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <SpiralAnimation />
+      </div>
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <Aurora colorStops={["#3A29FF", "#FF94B4", "#FF3232"]} blend={0.5} amplitude={1.0} speed={0.5} />
       </div>
 
       {/* Premium ambient lighting */}
