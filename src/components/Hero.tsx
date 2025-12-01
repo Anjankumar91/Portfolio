@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import { renderCanvas } from "@/components/ui/canvas";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
+import DarkVeil from "@/components/ui/dark-veil";
 
 export const Hero = () => {
   useEffect(() => {
@@ -63,6 +64,11 @@ export const Hero = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
+      {/* DarkVeil animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-30">
+        <DarkVeil speed={0.3} warpAmount={0.3} />
+      </div>
+      
       <canvas
         className="pointer-events-none absolute inset-0 z-0"
         id="canvas"
