@@ -64,7 +64,7 @@ export const Achievements = () => {
         <SpiralAnimation />
       </div>
       <div className="absolute inset-0 -z-10 opacity-40">
-        <Aurora colorStops={["#3A29FF", "#FF94B4", "#FF3232"]} blend={0.5} amplitude={1.0} speed={0.5} />
+        <Aurora colorStops={["#7CFF67", "#FF8C00", "#1E3A8A"]} blend={0.5} amplitude={1.0} speed={0.5} />
       </div>
 
       {/* Premium ambient lighting */}
