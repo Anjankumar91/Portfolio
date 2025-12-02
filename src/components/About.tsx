@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { SpiralAnimation } from "@/components/ui/spiral-animation";
-import Aurora from "@/components/ui/aurora";
+import Galaxy from "@/components/ui/galaxy";
 import { MotionReveal, TextReveal } from "@/components/ui/motion-wrapper";
 
 export const About = () => {
@@ -21,10 +20,14 @@ export const About = () => {
   return (
     <section id="about" className="relative py-20 px-4 overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <SpiralAnimation />
-      </div>
-      <div className="absolute inset-0 -z-10 opacity-40">
-        <Aurora colorStops={["#7CFF67", "#FF8C00", "#1E3A8A"]} blend={0.5} amplitude={1.0} speed={0.5} />
+        <Galaxy 
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1.5}
+          glowIntensity={0.5}
+          saturation={0.8}
+          hueShift={240}
+        />
       </div>
       
       {/* Premium ambient lighting */}
