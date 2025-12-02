@@ -6,6 +6,7 @@ import { renderCanvas } from "@/components/ui/canvas";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
 import DarkVeil from "@/components/ui/dark-veil";
+import Orb from "@/components/ui/orb";
 
 export const Hero = () => {
   useEffect(() => {
@@ -67,6 +68,16 @@ export const Hero = () => {
       {/* DarkVeil animated background layer */}
       <div className="absolute inset-0 -z-10 opacity-30">
         <DarkVeil speed={0.3} warpAmount={0.3} />
+      </div>
+      
+      {/* Orb animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <Orb 
+          hoverIntensity={0.5}
+          rotateOnHover={true}
+          hue={0}
+          forceHoverState={false}
+        />
       </div>
       
       <canvas
