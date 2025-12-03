@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LucideIcon, Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useHeroTheme } from "@/contexts/HeroThemeContext"
 import { cn } from "@/lib/utils"
 
 interface NavItem {
@@ -21,7 +21,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<string>(defaultActive)
   const [isMobile, setIsMobile] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { heroTheme, toggleHeroTheme } = useHeroTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -312,17 +312,17 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
           
           {/* Theme Toggle */}
           <motion.button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={toggleHeroTheme}
             className="relative cursor-pointer p-3 rounded-full transition-all duration-300 text-foreground/70 hover:text-foreground hover:bg-foreground/10"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <motion.div
               initial={false}
-              animate={{ rotate: theme === "dark" ? 0 : 180 }}
+              animate={{ rotate: heroTheme === "dark" ? 0 : 180 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {theme === "dark" ? (
+              {heroTheme === "dark" ? (
                 <Moon size={18} strokeWidth={2.5} />
               ) : (
                 <Sun size={18} strokeWidth={2.5} />
