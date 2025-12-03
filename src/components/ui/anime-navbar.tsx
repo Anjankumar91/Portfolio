@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { LucideIcon, Moon, Sun } from "lucide-react"
-import { useHeroTheme } from "@/contexts/HeroThemeContext"
+import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface NavItem {
@@ -21,7 +20,6 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<string>(defaultActive)
   const [isMobile, setIsMobile] = useState(false)
-  const { heroTheme, toggleHeroTheme } = useHeroTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -88,7 +86,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     <div className="sticky top-0 left-0 right-0 z-[9999] pt-16 pb-4 bg-background/80 backdrop-blur-sm overflow-visible">
       <div className="flex justify-center">
         <motion.div 
-          className="flex items-center gap-3 bg-secondary/80 border border-border/50 backdrop-blur-lg py-2 px-2 rounded-full shadow-lg relative"
+          className="flex items-center gap-3 bg-black/50 border border-white/10 backdrop-blur-lg py-2 px-2 rounded-full shadow-lg relative"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -111,8 +109,8 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                 onMouseLeave={() => setHoveredTab(null)}
                 className={cn(
                   "relative cursor-pointer text-sm font-semibold px-6 py-3 rounded-full transition-all duration-300",
-                  "text-foreground/70 hover:text-foreground",
-                  isActive && "text-foreground"
+                  "text-white/70 hover:text-white",
+                  isActive && "text-white"
                 )}
               >
                 {isActive && (
@@ -165,7 +163,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute inset-0 bg-foreground/10 rounded-full -z-10"
+                      className="absolute inset-0 bg-white/10 rounded-full -z-10"
                     />
                   )}
                 </AnimatePresence>
@@ -183,7 +181,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                   >
                     <div className="relative w-12 h-12">
                       <motion.div 
-                        className="absolute w-10 h-10 bg-foreground rounded-full left-1/2 -translate-x-1/2"
+                        className="absolute w-10 h-10 bg-white rounded-full left-1/2 -translate-x-1/2"
                         animate={
                           hoveredTab ? {
                             scale: [1, 1.1, 1],
@@ -203,7 +201,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                         }
                       >
                         <motion.div 
-                          className="absolute w-2 h-2 bg-background rounded-full"
+                          className="absolute w-2 h-2 bg-black rounded-full"
                           animate={
                             hoveredTab ? {
                               scaleY: [1, 0.2, 1],
@@ -216,7 +214,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                           style={{ left: '25%', top: '40%' }}
                         />
                         <motion.div 
-                          className="absolute w-2 h-2 bg-background rounded-full"
+                          className="absolute w-2 h-2 bg-black rounded-full"
                           animate={
                             hoveredTab ? {
                               scaleY: [1, 0.2, 1],
@@ -244,7 +242,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                         />
                         
                         <motion.div 
-                          className="absolute w-4 h-2 border-b-2 border-background rounded-full"
+                          className="absolute w-4 h-2 border-b-2 border-black rounded-full"
                           animate={
                             hoveredTab ? {
                               scaleY: 1.5,
@@ -301,7 +299,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                           }
                         }
                       >
-                        <div className="w-full h-full bg-foreground rotate-45 transform origin-center" />
+                        <div className="w-full h-full bg-white rotate-45 transform origin-center" />
                       </motion.div>
                     </div>
                   </motion.div>
@@ -309,26 +307,6 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
               </a>
             )
           })}
-          
-          {/* Theme Toggle */}
-          <motion.button
-            onClick={toggleHeroTheme}
-            className="relative cursor-pointer p-3 rounded-full transition-all duration-300 text-foreground/70 hover:text-foreground hover:bg-foreground/10"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <motion.div
-              initial={false}
-              animate={{ rotate: heroTheme === "dark" ? 0 : 180 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              {heroTheme === "dark" ? (
-                <Moon size={18} strokeWidth={2.5} />
-              ) : (
-                <Sun size={18} strokeWidth={2.5} />
-              )}
-            </motion.div>
-          </motion.button>
         </motion.div>
       </div>
     </div>

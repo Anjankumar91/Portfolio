@@ -7,17 +7,11 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
 import DarkVeil from "@/components/ui/dark-veil";
 import Orb from "@/components/ui/orb";
-import { useHeroTheme } from "@/contexts/HeroThemeContext";
-import { cn } from "@/lib/utils";
 
 export const Hero = () => {
-  const { heroTheme } = useHeroTheme();
-  
   useEffect(() => {
-    if (heroTheme === "dark") {
-      renderCanvas();
-    }
-  }, [heroTheme]);
+    renderCanvas();
+  }, []);
 
   // Premium animation variants
   const containerVariants = {
@@ -70,46 +64,30 @@ export const Hero = () => {
   };
 
   return (
-    <section 
-      id="hero" 
-      className={cn(
-        "relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden transition-colors duration-500",
-        heroTheme === "light" ? "bg-[hsl(0_0%_100%)]" : "bg-transparent"
-      )}
-    >
-      {/* DarkVeil animated background layer - only show in dark mode */}
-      {heroTheme === "dark" && (
-        <div className="absolute inset-0 -z-10 opacity-30">
-          <DarkVeil speed={0.3} warpAmount={0.3} />
-        </div>
-      )}
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
+      {/* DarkVeil animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-30">
+        <DarkVeil speed={0.3} warpAmount={0.3} />
+      </div>
       
-      {/* Orb animated background layer - only show in dark mode */}
-      {heroTheme === "dark" && (
-        <div className="absolute inset-0 -z-10 opacity-40">
-          <Orb 
-            hoverIntensity={0.5}
-            rotateOnHover={true}
-            hue={0}
-            forceHoverState={false}
-          />
-        </div>
-      )}
+      {/* Orb animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <Orb 
+          hoverIntensity={0.5}
+          rotateOnHover={true}
+          hue={0}
+          forceHoverState={false}
+        />
+      </div>
       
-      {/* Canvas - only show in dark mode */}
-      {heroTheme === "dark" && (
-        <canvas
-          className="pointer-events-none absolute inset-0 z-0"
-          id="canvas"
-        ></canvas>
-      )}
+      <canvas
+        className="pointer-events-none absolute inset-0 z-0"
+        id="canvas"
+      ></canvas>
       
       {/* Luxury ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className={cn(
-          "absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[120px] transition-colors duration-500",
-          heroTheme === "light" ? "bg-primary/10" : "bg-primary/5"
-        )} />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
       </div>
 
       <motion.div 
@@ -127,7 +105,7 @@ export const Hero = () => {
                 fontSize: "70px",
                 fontWeight: 700
               }}
-              color={heroTheme === "light" ? "rgb(30, 41, 59)" : "rgb(255, 255, 255)"}
+              color="rgb(255, 255, 255)"
               spread={5}
               density={5}
               animation={{
@@ -143,20 +121,14 @@ export const Hero = () => {
         </motion.div>
 
         <motion.p 
-          className={cn(
-            "text-xl md:text-2xl mb-4 transition-colors duration-500",
-            heroTheme === "light" ? "text-[hsl(215_20%_45%)]" : "text-muted-foreground"
-          )}
+          className="text-xl md:text-2xl text-muted-foreground mb-4"
           variants={itemVariants}
         >
           Data Analyst | Business Intelligence Developer
         </motion.p>
 
         <motion.p 
-          className={cn(
-            "text-lg max-w-2xl mx-auto mb-8 transition-colors duration-500",
-            heroTheme === "light" ? "text-[hsl(215_20%_45%)]" : "text-muted-foreground"
-          )}
+          className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8"
           variants={itemVariants}
         >
           Transforming data into actionable insights. Specialized in Power BI, data visualization, 
