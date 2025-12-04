@@ -1,11 +1,22 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
-import { Download, FileText } from "lucide-react";
+import { Download, FileText, X, ExternalLink } from "lucide-react";
 import Galaxy from "@/components/ui/galaxy";
 import { MotionReveal, MagneticHover } from "@/components/ui/motion-wrapper";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+const RESUME_URL = "/resume.pdf";
 
 export const Resume = () => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
   const statVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
@@ -101,7 +112,7 @@ export const Resume = () => {
                   <MagneticHover>
                     <Button asChild className="bg-primary hover:bg-primary/90 btn-shine overflow-hidden animate-pulse-glow">
                       <a 
-                        href="/resume.pdf" 
+                        href={RESUME_URL} 
                         download="Resume.pdf"
                       >
                         <motion.span
@@ -116,21 +127,19 @@ export const Resume = () => {
                     </Button>
                   </MagneticHover>
                   <MagneticHover>
-                    <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 btn-shine overflow-hidden">
-                      <a 
-                        href="/resume.pdf" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
+                    <Button 
+                      variant="outline" 
+                      className="border-primary text-primary hover:bg-primary/10 btn-shine overflow-hidden"
+                      onClick={() => setIsPreviewOpen(true)}
+                    >
+                      <motion.span
+                        className="flex items-center"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                       >
-                        <motion.span
-                          className="flex items-center"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <FileText className="h-4 w-4 mr-2" />
-                          View Online
-                        </motion.span>
-                      </a>
+                        <FileText className="h-4 w-4 mr-2" />
+                        Preview Resume
+                      </motion.span>
                     </Button>
                   </MagneticHover>
                 </motion.div>
@@ -165,6 +174,38 @@ export const Resume = () => {
           </motion.div>
         </MotionReveal>
       </div>
+
+      {/* PDF Preview Modal */}
+      <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+        <DialogContent className="max-w-4xl w-[95vw] h-[90vh] p-0 bg-card border-border">
+          <DialogHeader className="p-4 pb-2 border-b border-border">
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-lg font-semibold">Resume Preview</DialogTitle>
+              <div className="flex items-center gap-2">
+                <Button asChild size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/10">
+                  <a href={RESUME_URL} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Open in New Tab
+                  </a>
+                </Button>
+                <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                  <a href={RESUME_URL} download="Resume.pdf">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </DialogHeader>
+          <div className="flex-1 w-full h-full min-h-0 p-4 pt-2">
+            <iframe
+              src={`${RESUME_URL}#toolbar=0&navpanes=0`}
+              className="w-full h-full rounded-lg border border-border bg-muted"
+              title="Resume Preview"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
