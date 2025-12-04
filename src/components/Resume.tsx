@@ -1,21 +1,10 @@
-/**
- * RESUME SECTION
- * Scroll effects implemented:
- * - FADE-IN ON SCROLL: Section elements fade in
- * - VERTICAL TIMELINE: Animated timeline with scroll-triggered reveals
- * - TEXT REVEAL: Heading revealed word-by-word
- */
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
-import { Download, FileText, ExternalLink, Briefcase, GraduationCap, Award } from "lucide-react";
+import { Download, FileText, X, ExternalLink } from "lucide-react";
 import Galaxy from "@/components/ui/galaxy";
-import { MagneticHover } from "@/components/ui/motion-wrapper";
-import { FadeIn, ScaleOnScroll } from "@/components/ui/scroll-animations";
-import { HeadingReveal } from "@/components/ui/text-reveal";
-import { Timeline, TimelineItem } from "@/components/ui/timeline";
+import { MotionReveal, MagneticHover } from "@/components/ui/motion-wrapper";
 import {
   Dialog,
   DialogContent,
@@ -25,36 +14,27 @@ import {
 
 const RESUME_URL = "/resume.pdf";
 
-// Timeline data for experience/education
-const timelineData = [
-  {
-    icon: <Briefcase className="h-4 w-4 text-primary" />,
-    date: "2022 - Present",
-    title: "Senior Data Analyst",
-    description: "Leading analytics initiatives and building dashboards for enterprise clients.",
-  },
-  {
-    icon: <Briefcase className="h-4 w-4 text-primary" />,
-    date: "2020 - 2022",
-    title: "Data Analyst",
-    description: "Developed automated reporting solutions and conducted statistical analysis.",
-  },
-  {
-    icon: <GraduationCap className="h-4 w-4 text-primary" />,
-    date: "2016 - 2020",
-    title: "Bachelor's in Data Science",
-    description: "Graduated with honors, specialized in machine learning and statistics.",
-  },
-  {
-    icon: <Award className="h-4 w-4 text-primary" />,
-    date: "2023",
-    title: "10+ Professional Certifications",
-    description: "Including Google Data Analytics, Microsoft Power BI, and AWS certifications.",
-  },
-];
-
 export const Resume = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const statVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.6 + i * 0.15,
+        duration: 0.6,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    }),
+  };
+
+  const stats = [
+    { label: "Experience", value: "3+ years in data analytics" },
+    { label: "Education", value: "Bachelor's in Data Science" },
+    { label: "Certifications", value: "10+ professional certificates" },
+  ];
 
   return (
     <section id="resume" className="py-20 px-4 relative overflow-hidden">
@@ -75,35 +55,13 @@ export const Resume = () => {
       </div>
 
       <div className="container mx-auto max-w-4xl relative z-10">
-        {/* FADE-IN + TEXT REVEAL: Section heading */}
-        <FadeIn className="mb-12 text-center">
-          <HeadingReveal as="h2" className="text-4xl md:text-5xl font-bold">
-            Resume
-          </HeadingReveal>
-        </FadeIn>
+        <MotionReveal variant="dramatic" className="mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-center">
+            <span className="text-gradient-premium">Resume</span>
+          </h2>
+        </MotionReveal>
 
-        {/* VERTICAL TIMELINE SCROLL ANIMATION */}
-        <FadeIn delay={0.2} className="mb-12">
-          <Timeline className="max-w-2xl mx-auto">
-            {timelineData.map((item, index) => (
-              <TimelineItem
-                key={item.title}
-                index={index}
-                icon={item.icon}
-                date={item.date}
-                isLast={index === timelineData.length - 1}
-              >
-                <div className="bg-card/50 backdrop-blur-sm rounded-lg p-4 border border-border/50">
-                  <h4 className="font-semibold text-foreground mb-1">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </div>
-              </TimelineItem>
-            ))}
-          </Timeline>
-        </FadeIn>
-
-        {/* SCALE ON SCROLL: Download card */}
-        <ScaleOnScroll delay={0.3}>
+        <MotionReveal variant="fadeScale" delay={0.2}>
           <motion.div
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
@@ -185,10 +143,36 @@ export const Resume = () => {
                     </Button>
                   </MagneticHover>
                 </motion.div>
+                
+                <motion.div 
+                  className="w-full pt-8 border-t border-border"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    {stats.map((stat, index) => (
+                      <motion.div
+                        key={stat.label}
+                        custom={index}
+                        variants={statVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.05, x: 5 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <h4 className="font-semibold text-primary mb-2">{stat.label}</h4>
+                        <p className="text-sm text-muted-foreground">{stat.value}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
               </div>
             </GlowCard>
           </motion.div>
-        </ScaleOnScroll>
+        </MotionReveal>
       </div>
 
       {/* PDF Preview Modal */}

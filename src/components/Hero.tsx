@@ -1,12 +1,5 @@
-/**
- * HERO SECTION
- * Scroll effects implemented:
- * - PARALLAX BACKGROUND: Background elements move at different speeds on scroll
- * - Existing canvas animation and WebGL effects preserved
- */
-
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import { renderCanvas } from "@/components/ui/canvas";
@@ -16,20 +9,6 @@ import DarkVeil from "@/components/ui/dark-veil";
 import Orb from "@/components/ui/orb";
 
 export const Hero = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  
-  // PARALLAX SCROLL EFFECT - Different speeds for depth
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  // Transform values for parallax layers
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, 300]);
-  const orbY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   useEffect(() => {
     renderCanvas();
   }, []);
@@ -85,53 +64,37 @@ export const Hero = () => {
   };
 
   return (
-    <section 
-      ref={sectionRef}
-      id="hero" 
-      className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden"
-    >
-      {/* PARALLAX LAYER 1: DarkVeil (slowest) */}
-      <motion.div 
-        className="absolute inset-0 -z-10 opacity-30"
-        style={{ y: backgroundY }}
-      >
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
+      {/* DarkVeil animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-30">
         <DarkVeil speed={0.3} warpAmount={0.3} />
-      </motion.div>
+      </div>
       
-      {/* PARALLAX LAYER 2: Orb (medium speed) */}
-      <motion.div 
-        className="absolute inset-0 -z-10 opacity-40"
-        style={{ y: orbY }}
-      >
+      {/* Orb animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-40">
         <Orb 
           hoverIntensity={0.5}
           rotateOnHover={true}
           hue={0}
           forceHoverState={false}
         />
-      </motion.div>
+      </div>
       
-      {/* Canvas layer (static) */}
       <canvas
         className="pointer-events-none absolute inset-0 z-0"
         id="canvas"
       ></canvas>
       
-      {/* Luxury ambient glow with parallax */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
-        style={{ y: backgroundY, opacity }}
-      >
+      {/* Luxury ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
-      </motion.div>
+      </div>
 
-      {/* PARALLAX LAYER 3: Content (fastest - creates depth) */}
       <motion.div 
         className="container mx-auto text-center relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        style={{ y: contentY, opacity }}
       >
         <motion.div variants={itemVariants}>
           <div className="text-5xl md:text-7xl font-bold mb-6 h-20 md:h-28 flex items-center justify-center">
