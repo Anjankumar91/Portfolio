@@ -99,27 +99,38 @@ export const Resume = () => {
                   transition={{ delay: 0.5 }}
                 >
                   <MagneticHover>
-                    <Button className="bg-primary hover:bg-primary/90 btn-shine overflow-hidden animate-pulse-glow">
-                      <motion.span
-                        className="flex items-center"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                    <Button asChild className="bg-primary hover:bg-primary/90 btn-shine overflow-hidden animate-pulse-glow">
+                      <a 
+                        href="/resume.pdf" 
+                        download="Resume.pdf"
                       >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download PDF
-                      </motion.span>
+                        <motion.span
+                          className="flex items-center"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Download Resume
+                        </motion.span>
+                      </a>
                     </Button>
                   </MagneticHover>
                   <MagneticHover>
-                    <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 btn-shine overflow-hidden">
-                      <motion.span
-                        className="flex items-center"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                    <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10 btn-shine overflow-hidden">
+                      <a 
+                        href="/resume.pdf" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
                       >
-                        <FileText className="h-4 w-4 mr-2" />
-                        View Online
-                      </motion.span>
+                        <motion.span
+                          className="flex items-center"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FileText className="h-4 w-4 mr-2" />
+                          View Online
+                        </motion.span>
+                      </a>
                     </Button>
                   </MagneticHover>
                 </motion.div>
