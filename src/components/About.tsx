@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import LightPillar from "@/components/ui/light-pillar";
+import Galaxy from "@/components/ui/galaxy";
 import { MotionReveal, WordReveal, LineReveal, FadeSection } from "@/components/ui/motion-wrapper";
 
 export const About = () => {
@@ -13,16 +13,13 @@ export const About = () => {
   return (
     <section id="about" className="relative py-20 px-4 overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <LightPillar 
-          topColor="#5227FF"
-          bottomColor="#FF9FFC"
-          intensity={0.8}
-          rotationSpeed={0.2}
-          glowAmount={0.004}
-          pillarWidth={3.5}
-          pillarHeight={0.4}
-          noiseIntensity={0.4}
-          mixBlendMode="normal"
+        <Galaxy 
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1.5}
+          glowIntensity={0.5}
+          saturation={0.8}
+          hueShift={240}
         />
       </div>
       
