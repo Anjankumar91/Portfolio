@@ -2,9 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
-import { Download, FileText, X, ExternalLink } from "lucide-react";
+import { Download, FileText, ExternalLink } from "lucide-react";
 import Galaxy from "@/components/ui/galaxy";
-import { MotionReveal, MagneticHover } from "@/components/ui/motion-wrapper";
+import { MotionReveal, MagneticHover, WordReveal, FadeSection, TiltCard } from "@/components/ui/motion-wrapper";
 import {
   Dialog,
   DialogContent,
@@ -16,19 +16,6 @@ const RESUME_URL = "/resume.pdf";
 
 export const Resume = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-
-  const statVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.6 + i * 0.15,
-        duration: 0.6,
-        ease: [0.25, 0.4, 0.25, 1] as const,
-      },
-    }),
-  };
 
   const stats = [
     { label: "Experience", value: "3+ years in data analytics" },
@@ -57,11 +44,11 @@ export const Resume = () => {
       <div className="container mx-auto max-w-4xl relative z-10">
         <MotionReveal variant="dramatic" className="mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-center">
-            <span className="text-gradient-premium">Resume</span>
+            <WordReveal text="Resume" className="text-gradient-premium" />
           </h2>
         </MotionReveal>
 
-        <MotionReveal variant="fadeScale" delay={0.2}>
+        <FadeSection delay={0.2}>
           <motion.div
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
@@ -83,46 +70,19 @@ export const Resume = () => {
                   <FileText className="h-16 w-16 text-primary" />
                 </motion.div>
                 <div>
-                  <motion.h3 
-                    className="text-2xl font-semibold mb-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                  >
+                  <h3 className="text-2xl font-semibold mb-2">
                     Download My Resume
-                  </motion.h3>
-                  <motion.p 
-                    className="text-muted-foreground mb-6"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                  >
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
                     Get a comprehensive overview of my experience, skills, and qualifications
-                  </motion.p>
+                  </p>
                 </div>
-                <motion.div 
-                  className="flex flex-col sm:flex-row gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 }}
-                >
+                <div className="flex flex-col sm:flex-row gap-4">
                   <MagneticHover>
                     <Button asChild className="bg-primary hover:bg-primary/90 btn-shine overflow-hidden animate-pulse-glow">
-                      <a 
-                        href={RESUME_URL} 
-                        download="Resume.pdf"
-                      >
-                        <motion.span
-                          className="flex items-center"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Download className="h-4 w-4 mr-2" />
-                          Download Resume
-                        </motion.span>
+                      <a href={RESUME_URL} download="Resume.pdf">
+                        <Download className="h-4 w-4 mr-2" />
+                        Download Resume
                       </a>
                     </Button>
                   </MagneticHover>
@@ -132,47 +92,33 @@ export const Resume = () => {
                       className="border-primary text-primary hover:bg-primary/10 btn-shine overflow-hidden"
                       onClick={() => setIsPreviewOpen(true)}
                     >
-                      <motion.span
-                        className="flex items-center"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <FileText className="h-4 w-4 mr-2" />
-                        Preview Resume
-                      </motion.span>
+                      <FileText className="h-4 w-4 mr-2" />
+                      Preview Resume
                     </Button>
                   </MagneticHover>
-                </motion.div>
+                </div>
                 
-                <motion.div 
-                  className="w-full pt-8 border-t border-border"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                >
+                <div className="w-full pt-8 border-t border-border">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                     {stats.map((stat, index) => (
-                      <motion.div
+                      <TiltCard
                         key={stat.label}
-                        custom={index}
-                        variants={statVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        whileHover={{ scale: 1.05, x: 5 }}
-                        transition={{ duration: 0.3 }}
+                        slideDirection={index % 2 === 0 ? 'left' : 'right'}
+                        index={index}
+                        tiltAmount={5}
+                        perspective={800}
+                        className="p-4 rounded-lg bg-muted/30"
                       >
                         <h4 className="font-semibold text-primary mb-2">{stat.label}</h4>
                         <p className="text-sm text-muted-foreground">{stat.value}</p>
-                      </motion.div>
+                      </TiltCard>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               </div>
             </GlowCard>
           </motion.div>
-        </MotionReveal>
+        </FadeSection>
       </div>
 
       {/* PDF Preview Modal */}

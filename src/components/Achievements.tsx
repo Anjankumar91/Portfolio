@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Trophy, Users, TrendingUp, Award } from "lucide-react";
 import Galaxy from "@/components/ui/galaxy";
-import { MotionReveal } from "@/components/ui/motion-wrapper";
+import { MotionReveal, TiltCard, WordReveal, FadeSection } from "@/components/ui/motion-wrapper";
 
 const achievements = [
   {
@@ -28,35 +28,6 @@ const achievements = [
 ];
 
 export const Achievements = () => {
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 40 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.15,
-        duration: 0.7,
-        ease: [0.25, 0.4, 0.25, 1] as const,
-      },
-    }),
-  };
-
-  const iconVariants = {
-    hidden: { scale: 0, rotate: -90 },
-    visible: (i: number) => ({
-      scale: 1,
-      rotate: 0,
-      transition: {
-        delay: i * 0.15 + 0.3,
-        duration: 0.6,
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 15,
-      },
-    }),
-  };
-
   return (
     <section id="achievements" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -78,71 +49,49 @@ export const Achievements = () => {
       <div className="container mx-auto max-w-6xl relative z-10">
         <MotionReveal variant="dramatic" className="text-center mb-4">
           <h2 className="text-4xl md:text-5xl font-bold">
-            <span className="text-gradient-premium">Achievements</span>
+            <WordReveal text="Achievements" className="text-gradient-premium" />
           </h2>
         </MotionReveal>
 
-        <MotionReveal variant="fadeUp" delay={0.2} className="text-center mb-12">
+        <FadeSection delay={0.2} className="text-center mb-12">
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Milestones and recognition in my data analytics journey
           </p>
-        </MotionReveal>
+        </FadeSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {achievements.map((achievement, index) => (
-            <motion.div
+            <TiltCard
               key={achievement.title}
-              custom={index}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              whileHover={{ y: -15, scale: 1.05 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+              slideDirection={index % 2 === 0 ? 'left' : 'right'}
+              index={index}
+              tiltAmount={10}
+              perspective={1000}
             >
               <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 card-hover-glow glass-luxury text-center">
                 <div className="col-span-full flex flex-col items-center">
                   <motion.div 
                     className="flex justify-center mb-4"
-                    custom={index}
-                    variants={iconVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
+                    whileHover={{ 
+                      scale: 1.15, 
+                      rotate: 10,
+                      boxShadow: '0 0 30px hsl(189 85% 55% / 0.4)'
+                    }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <motion.div 
-                      className="p-3 bg-primary/10 rounded-full"
-                      whileHover={{ 
-                        scale: 1.15, 
-                        rotate: 10,
-                        boxShadow: '0 0 30px hsl(189 85% 55% / 0.4)'
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    <div className="p-3 bg-primary/10 rounded-full">
                       <achievement.icon className="h-8 w-8 text-primary" />
-                    </motion.div>
+                    </div>
                   </motion.div>
-                  <motion.h3 
-                    className="text-lg font-semibold mb-2"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.15 + 0.4 }}
-                  >
+                  <h3 className="text-lg font-semibold mb-2">
                     {achievement.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-sm text-muted-foreground"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.15 + 0.5 }}
-                  >
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
                     {achievement.description}
-                  </motion.p>
+                  </p>
                 </div>
               </GlowCard>
-            </motion.div>
+            </TiltCard>
           ))}
         </div>
       </div>
