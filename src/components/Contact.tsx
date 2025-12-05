@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, FileText, Send } from "lucide-react";
-import Galaxy from "@/components/ui/galaxy";
+import LightPillar from "@/components/ui/light-pillar";
 import { MotionReveal, MagneticHover, TiltCard, WordReveal, FadeSection } from "@/components/ui/motion-wrapper";
 
 const contactLinks = [
@@ -36,13 +36,16 @@ export const Contact = () => {
   return (
     <section id="contact" className="py-20 px-4 bg-secondary/30 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <Galaxy 
-          mouseRepulsion={true}
-          mouseInteraction={true}
-          density={1.5}
-          glowIntensity={0.5}
-          saturation={0.8}
-          hueShift={240}
+        <LightPillar 
+          topColor="#5227FF"
+          bottomColor="#FF9FFC"
+          intensity={0.8}
+          rotationSpeed={0.25}
+          glowAmount={0.004}
+          pillarWidth={3.5}
+          pillarHeight={0.4}
+          noiseIntensity={0.4}
+          mixBlendMode="normal"
         />
       </div>
 
