@@ -337,6 +337,72 @@ export const TextReveal = ({ text, className, delay = 0 }: TextRevealProps) => {
   );
 };
 
+// Word-by-word text reveal for headings
+interface WordRevealProps {
+  text: string;
+  className?: string;
+  delay?: number;
+  staggerDelay?: number;
+}
+
+export const WordReveal = ({ text, className, delay = 0, staggerDelay = 0.08 }: WordRevealProps) => {
+  const { ref, isInView } = useScrollReveal({ once: true });
+  const words = text.split(' ');
+
+  return (
+    <motion.span ref={ref} className={className} style={{ display: 'inline-block' }}>
+      {words.map((word, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 30, rotateX: -45 }}
+          animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 30, rotateX: -45 }}
+          transition={{
+            duration: 0.6,
+            delay: delay + index * staggerDelay,
+            ease: [0.25, 0.4, 0.25, 1],
+          }}
+          style={{ display: 'inline-block', marginRight: '0.3em', perspective: 1000 }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
+// Line-by-line text reveal
+interface LineRevealProps {
+  lines: string[];
+  className?: string;
+  lineClassName?: string;
+  delay?: number;
+  staggerDelay?: number;
+}
+
+export const LineReveal = ({ lines, className, lineClassName, delay = 0, staggerDelay = 0.15 }: LineRevealProps) => {
+  const { ref, isInView } = useScrollReveal({ once: true });
+
+  return (
+    <motion.div ref={ref} className={className}>
+      {lines.map((line, index) => (
+        <motion.div
+          key={index}
+          className={lineClassName}
+          initial={{ opacity: 0, x: -40, filter: 'blur(8px)' }}
+          animate={isInView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : { opacity: 0, x: -40, filter: 'blur(8px)' }}
+          transition={{
+            duration: 0.7,
+            delay: delay + index * staggerDelay,
+            ease: [0.25, 0.4, 0.25, 1],
+          }}
+        >
+          {line}
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+};
+
 // Parallax wrapper component
 interface ParallaxWrapperProps extends HTMLMotionProps<'div'> {
   children: ReactNode;
@@ -402,3 +468,131 @@ export const ShimmerEffect = ({ className }: { className?: string }) => {
     />
   );
 };
+
+// 3D Tilt Card with parallax effect on scroll
+interface TiltCardProps {
+  children: ReactNode;
+  className?: string;
+  tiltAmount?: number;
+  perspective?: number;
+  slideDirection?: 'left' | 'right' | 'none';
+  index?: number;
+}
+
+export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(({
+  children,
+  className,
+  tiltAmount = 10,
+  perspective = 1000,
+  slideDirection = 'none',
+  index = 0,
+}, ref) => {
+  const { ref: scrollRef, isInView } = useScrollReveal({ once: true });
+
+  const slideVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      x: slideDirection === 'left' ? -100 : slideDirection === 'right' ? 100 : 0,
+      y: slideDirection === 'none' ? 60 : 0,
+      rotateY: slideDirection === 'left' ? -15 : slideDirection === 'right' ? 15 : 0,
+      filter: 'blur(10px)',
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotateY: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.8,
+        delay: index * 0.15,
+        ease: [0.25, 0.4, 0.25, 1],
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      ref={ref || scrollRef}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={slideVariants}
+      style={{ perspective }}
+      className={className}
+      whileHover={{
+        rotateX: -tiltAmount / 2,
+        rotateY: tiltAmount / 2,
+        scale: 1.02,
+        z: 50,
+        transition: { duration: 0.4, ease: [0.25, 0.4, 0.25, 1] },
+      }}
+    >
+      <motion.div
+        style={{ transformStyle: 'preserve-3d' }}
+        whileHover={{
+          translateZ: 20,
+          transition: { duration: 0.4 },
+        }}
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+});
+
+TiltCard.displayName = 'TiltCard';
+
+// Alternating slide container for cards
+interface AlternatingSlideContainerProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export const AlternatingSlideContainer = ({ children, className }: AlternatingSlideContainerProps) => {
+  const { ref, isInView } = useScrollReveal({ once: true });
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Fade section wrapper for consistent section animations
+interface FadeSectionProps {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}
+
+export const FadeSection = forwardRef<HTMLDivElement, FadeSectionProps>(({
+  children,
+  className,
+  delay = 0,
+}, ref) => {
+  const { ref: scrollRef, isInView } = useScrollReveal({ once: true });
+
+  return (
+    <motion.div
+      ref={ref || scrollRef}
+      className={className}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: [0.25, 0.4, 0.25, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+});
+
+FadeSection.displayName = 'FadeSection';
