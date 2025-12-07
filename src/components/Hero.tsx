@@ -7,6 +7,7 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
 import DarkVeil from "@/components/ui/dark-veil";
 import Orb from "@/components/ui/orb";
+import LightPillar from "@/components/ui/light-pillar";
 
 export const Hero = () => {
   useEffect(() => {
@@ -77,6 +78,23 @@ export const Hero = () => {
           rotateOnHover={true}
           hue={0}
           forceHoverState={false}
+        />
+      </div>
+      
+      {/* LightPillar animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-50">
+        <LightPillar
+          topColor="#5227FF"
+          bottomColor="#FF9FFC"
+          intensity={1.0}
+          rotationSpeed={0.3}
+          glowAmount={0.005}
+          pillarWidth={3.0}
+          pillarHeight={0.4}
+          noiseIntensity={0.5}
+          pillarRotation={0}
+          interactive={false}
+          mixBlendMode="screen"
         />
       </div>
       
