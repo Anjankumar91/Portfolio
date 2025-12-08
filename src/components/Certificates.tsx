@@ -111,11 +111,7 @@ export const Certificates = () => {
                     View Certificate
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {cert.skills.split(',').map((skill, index) => (
-                      <span key={index} className="px-2 py-1 bg-gray-200 rounded text-sm">
-                        {skill.trim()}
-                      </span>
-                    ))}
+                    {cert.skills}
                   </p>
                 </div>
               </GlowCard>
