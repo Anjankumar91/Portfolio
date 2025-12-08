@@ -107,6 +107,7 @@ export default function VaporizeTextCycle({
   const lastFontRef = useRef<string | null>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationFrameRef = useRef<number | null>(null);
+  const waitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [animationState, setAnimationState] = useState<"static" | "vaporizing" | "fadingIn" | "waiting">("static");
   const vaporizeProgressRef = useRef(0);
@@ -173,22 +174,15 @@ export default function VaporizeTextCycle({
     renderParticles(ctx, particles, globalDpr);
   }, [globalDpr]);
 
-  // Start animation cycle when in view
+  // Start animation cycle when in view - always loop
   useEffect(() => {
-    if (isInView) {
+    if (isInView && animationState === "static") {
       const startAnimationTimeout = setTimeout(() => {
         setAnimationState("vaporizing");
       }, 0);
       return () => clearTimeout(startAnimationTimeout);
-    } else {
-      // When component goes out of view, reset to static state
-      setAnimationState("static");
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = null;
-      }
     }
-  }, [isInView]);
+  }, [isInView, animationState]);
 
   // Animation loop - only run when in view
   useEffect(() => {
@@ -261,10 +255,14 @@ export default function VaporizeTextCycle({
 
           if (fadeOpacityRef.current >= 1) {
             setAnimationState("waiting");
-            setTimeout(() => {
-              setAnimationState("vaporizing");
+            // Clear any existing timeout
+            if (waitTimeoutRef.current) {
+              clearTimeout(waitTimeoutRef.current);
+            }
+            waitTimeoutRef.current = setTimeout(() => {
               vaporizeProgressRef.current = 0;
               resetParticles(particlesRef.current);
+              setAnimationState("vaporizing");
             }, animationDurations.WAIT_DURATION);
           }
           break;
@@ -283,6 +281,9 @@ export default function VaporizeTextCycle({
     return () => {
       if (frameId) {
         cancelAnimationFrame(frameId);
+      }
+      if (waitTimeoutRef.current) {
+        clearTimeout(waitTimeoutRef.current);
       }
     };
   }, [
