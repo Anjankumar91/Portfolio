@@ -117,7 +117,7 @@ export const Hero = () => {
         <motion.div variants={itemVariants}>
           <div className="text-5xl md:text-7xl font-bold mb-6 h-20 md:h-28 flex items-center justify-center">
             <VaporizeTextCycle
-              texts={["Your Name"]}
+              texts={["Venkat Anjan Kumar"]}
               font={{
                 fontFamily: "Inter, sans-serif",
                 fontSize: "70px",
