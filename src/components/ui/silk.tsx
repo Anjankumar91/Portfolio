@@ -91,7 +91,7 @@ const SilkPlane: React.FC<SilkPlaneProps> = ({ speed, scale, color, noiseIntensi
       uSpeed: { value: speed },
       uScale: { value: scale },
       uNoiseIntensity: { value: noiseIntensity },
-      uColor: { value: new THREE.Color(...hexToNormalizedRGB(color)) },
+      uColor: { value: new THREE.Color(color) },
       uRotation: { value: rotation },
       uTime: { value: 0 }
     }),
