@@ -13,16 +13,18 @@ const certificates = [
     skills: ["Business Intelligence", "Data Anlaysis", "Data Modeling", "Data Visualization", "Data Transformation", "Google Cloud"]
   },
   {
-    title: "KPMG Data Analytics Job Simulation",
-    issuer: "Forage",
-    date: "2024",
-    description: "Analyzed customer datasets and created targeted marketing strategies using data insights.",
+    title: "AI Python for Beginners",
+    issuer: "DeepLearning.AI",
+    date: "2025",
+    link: "https://learn.deeplearning.ai/accomplishments/4c2d83fb-1ff6-46e7-84ec-3f26790a7753?usp=sharing",
+    skills: ["Python", "Generative Models", "Prompting"]
   },
   {
-    title: "PwC Power BI Job Simulation",
-    issuer: "Forage",
+    title: "Google Cloud Computing Foundations Certificate",
+    issuer: "Google Cloud",
     date: "2024",
-    description: "Developed Power BI dashboards for client stakeholders with focus on KPI tracking.",
+    link: "https://www.credly.com/badges/4473b9fa-73f3-4c6a-923a-1e023f9c2f11",
+    skills: ["Google Cloud", "Cloud Foundations", "Cloud Computing", "Data & ML", "Cloud Storage"]
   },
 ];
 
