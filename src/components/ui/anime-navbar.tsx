@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -20,6 +20,9 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   const [hoveredTab, setHoveredTab] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<string>(defaultActive)
   const [isMobile, setIsMobile] = useState(false)
+  const lastActiveRef = useRef<string>(defaultActive)
+  const rafRef = useRef<number | null>(null)
+  const lastScrollTime = useRef<number>(0)
 
   useEffect(() => {
     setMounted(true)
@@ -35,32 +38,54 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  // Scroll spy - update active tab based on visible section
-  useEffect(() => {
-    const handleScroll = () => {
-      const navbarHeight = 64
-      const threshold = window.innerHeight * 0.3 // 30% of viewport from top
-      
-      let currentSection = items[0]?.name || defaultActive
-      
-      for (const item of items) {
-        const element = document.querySelector(item.url)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          // Section is active if its top is above the threshold point
-          if (rect.top <= navbarHeight + threshold) {
-            currentSection = item.name
-          }
+  // Debounced scroll spy - update active tab based on visible section
+  const updateActiveSection = useCallback(() => {
+    const navbarHeight = 80
+    const threshold = window.innerHeight * 0.35
+    
+    let currentSection = items[0]?.name || defaultActive
+    
+    for (const item of items) {
+      const element = document.querySelector(item.url)
+      if (element) {
+        const rect = element.getBoundingClientRect()
+        if (rect.top <= navbarHeight + threshold) {
+          currentSection = item.name
         }
       }
-      
+    }
+    
+    // Only update if section actually changed
+    if (currentSection !== lastActiveRef.current) {
+      lastActiveRef.current = currentSection
       setActiveTab(currentSection)
+    }
+  }, [items, defaultActive])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const now = Date.now()
+      // Throttle to max 60fps (16ms) 
+      if (now - lastScrollTime.current < 16) return
+      lastScrollTime.current = now
+      
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+      
+      rafRef.current = requestAnimationFrame(updateActiveSection)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
-    handleScroll() // Initial check
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [items, defaultActive])
+    updateActiveSection() // Initial check
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [updateActiveSection])
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
     e.preventDefault()
