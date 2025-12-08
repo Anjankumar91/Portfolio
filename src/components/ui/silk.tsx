@@ -137,7 +137,7 @@ export interface SilkProps {
 const Silk: React.FC<SilkProps> = ({ 
   speed = 5, 
   scale = 1, 
-  color = '#9C84A3', 
+  color = '#7B7481', 
   noiseIntensity = 1.5, 
   rotation = 0 
 }) => {
