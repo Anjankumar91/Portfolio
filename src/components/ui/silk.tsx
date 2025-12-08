@@ -38,31 +38,38 @@ uniform float uScale;
 uniform float uRotation;
 uniform float uNoiseIntensity;
 
-vec2 rotateUvs(vec2 uv, float angle) {
-    float c = cos(angle);
-    float s = sin(angle);
-    mat2 rot = mat2(c, -s, s, c);
-    return rot * uv;
-}
+const float e = 2.71828182845904523536;
 
 float noise(vec2 texCoord) {
-    return fract(sin(dot(texCoord.xy ,vec2(12.9898,78.233))) * 43758.5453);
+  float G = e;
+  vec2  r = (G * sin(G * texCoord));
+  return fract(r.x * r.y * (1.0 + texCoord.x));
+}
+
+vec2 rotateUvs(vec2 uv, float angle) {
+  float c = cos(angle);
+  float s = sin(angle);
+  mat2  rot = mat2(c, -s, s, c);
+  return rot * uv;
 }
 
 void main() {
-    vec2 uv = rotateUvs(vUv * uScale, uRotation);
-    float tOffset = uSpeed * uTime;
+  float rnd        = noise(gl_FragCoord.xy);
+  vec2  uv         = rotateUvs(vUv * uScale, uRotation);
+  vec2  tex        = uv * uScale;
+  float tOffset    = uSpeed * uTime;
 
-    uv.y += 0.03 * sin(8.0 * uv.x - tOffset);
+  tex.y += 0.03 * sin(8.0 * tex.x - tOffset);
 
-    // silk pattern
-    float pattern = 0.6 + 0.4 * sin(5.0 * (uv.x + uv.y + 0.02 * tOffset)) 
-                    + 0.05 * noise(gl_FragCoord.xy) * uNoiseIntensity;
+  float pattern = 0.6 +
+                  0.4 * sin(5.0 * (tex.x + tex.y +
+                                   cos(3.0 * tex.x + 5.0 * tex.y) +
+                                   0.02 * tOffset) +
+                           sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
-    // Multiply color by pattern, clamp to keep bright
-    vec3 col = uColor * clamp(pattern, 0.0, 1.0);
-
-    gl_FragColor = vec4(col, 1.0);
+  vec4 col = vec4(uColor, 1.0) * vec4(pattern) - rnd / 15.0 * uNoiseIntensity;
+  col.a = 1.0;
+  gl_FragColor = col;
 }
 `;
 
@@ -84,7 +91,7 @@ const SilkPlane: React.FC<SilkPlaneProps> = ({ speed, scale, color, noiseIntensi
       uSpeed: { value: speed },
       uScale: { value: scale },
       uNoiseIntensity: { value: noiseIntensity },
-      uColor: { value: new THREE.Color(color) },
+      uColor: { value: new THREE.Color(...hexToNormalizedRGB(color)) },
       uRotation: { value: rotation },
       uTime: { value: 0 }
     }),
@@ -130,7 +137,7 @@ export interface SilkProps {
 const Silk: React.FC<SilkProps> = ({ 
   speed = 5, 
   scale = 1, 
-  color = '#00FFFF', 
+  color = '#9C84A3', 
   noiseIntensity = 1.5, 
   rotation = 0 
 }) => {
