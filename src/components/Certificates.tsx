@@ -6,10 +6,11 @@ import { MotionReveal, TiltCard, WordReveal, FadeSection } from "@/components/ui
 
 const certificates = [
   {
-    title: "Accenture Data Analytics Job Simulation",
-    issuer: "Forage",
+    title: "Google Cloud Data Analytics Certificate",
+    issuer: "Google Cloud",
     date: "2024",
-    description: "Completed virtual experience program in data analysis, visualization, and client presentation.",
+    link: "https://www.credly.com/badges/413811e7-c88c-4c74-9f6d-f8dd4e1e5b72",
+    skills: ["Business Intelligence", "Data Anlaysis", "Data Modeling", "Data Visualization", "Data Transformation", "Google Cloud"]
   },
   {
     title: "KPMG Data Analytics Job Simulation",
