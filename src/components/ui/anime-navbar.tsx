@@ -83,10 +83,10 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   if (!mounted) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[9999] h-16 flex items-center justify-center bg-background">
+    <div className="fixed top-0 left-0 right-0 z-[9999] h-20 pt-6 flex items-start justify-center bg-background">
       <div className="flex justify-center">
         <motion.div 
-          className="flex items-center gap-2 bg-background border border-border py-1.5 px-2 rounded-full relative"
+          className="flex items-center gap-2 bg-background border border-border py-1.5 px-2 rounded-full relative overflow-visible"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -171,7 +171,7 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
                 {isActive && (
                   <motion.div
                     layoutId="anime-mascot"
-                    className="absolute -top-12 left-1/2 -translate-x-1/2 pointer-events-none"
+                    className="absolute -top-10 left-1/2 -translate-x-1/2 pointer-events-none"
                     initial={false}
                     transition={{
                       type: "spring",
