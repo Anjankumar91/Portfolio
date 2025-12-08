@@ -30,7 +30,7 @@ export const Skills = () => {
         <Silk
           speed={5}
           scale={1}
-          color="#7B7481"
+          color="#60A5FA"
           noiseIntensity={1.5}
           rotation={0}
         />
