@@ -64,9 +64,9 @@ export const Certificates = () => {
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="section-content-overlay">
           <MotionReveal variant="dramatic" className="text-center mb-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-shadow-md">
-              <WordReveal text="Job Simulation Certificates" className="text-gradient-premium" />
-            </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-shadow-md">
+            <WordReveal text="Job Simulation Certificates" className="text-slate-100" />
+          </h2>
           </MotionReveal>
 
           <FadeSection delay={0.2} className="text-center mb-12">
