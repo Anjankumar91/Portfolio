@@ -31,9 +31,9 @@ export const About = () => {
       <div className="container mx-auto max-w-4xl relative z-10">
         <div className="section-content-overlay">
           <MotionReveal variant="dramatic" className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-center text-shadow-md">
-              <WordReveal text="About Me" className="text-gradient-premium" />
-            </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-shadow-md">
+            <WordReveal text="About Me" className="text-slate-100" />
+          </h2>
           </MotionReveal>
 
         <FadeSection delay={0.2}>
