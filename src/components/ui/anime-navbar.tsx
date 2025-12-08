@@ -38,29 +38,29 @@ export function AnimeNavBar({ items, className, defaultActive = "Home" }: NavBar
   // Scroll spy - update active tab based on visible section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = items.map(item => ({
-        name: item.name,
-        element: document.querySelector(item.url)
-      })).filter(section => section.element)
-
-      const scrollPosition = window.scrollY + 150 // Offset for navbar height
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i]
-        if (section.element) {
-          const sectionTop = (section.element as HTMLElement).offsetTop
-          if (scrollPosition >= sectionTop) {
-            setActiveTab(section.name)
-            break
+      const navbarHeight = 64
+      const threshold = window.innerHeight * 0.3 // 30% of viewport from top
+      
+      let currentSection = items[0]?.name || defaultActive
+      
+      for (const item of items) {
+        const element = document.querySelector(item.url)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          // Section is active if its top is above the threshold point
+          if (rect.top <= navbarHeight + threshold) {
+            currentSection = item.name
           }
         }
       }
+      
+      setActiveTab(currentSection)
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll() // Initial check
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [items])
+  }, [items, defaultActive])
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
     e.preventDefault()
