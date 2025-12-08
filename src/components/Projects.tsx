@@ -48,17 +48,18 @@ export const Projects = () => {
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
-        <MotionReveal variant="dramatic" className="text-center mb-4">
-          <h2 className="text-4xl md:text-5xl font-bold">
-            <WordReveal text="Projects" className="text-gradient-premium" />
-          </h2>
-        </MotionReveal>
+        <div className="section-content-overlay">
+          <MotionReveal variant="dramatic" className="text-center mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-shadow-md">
+              <WordReveal text="Projects" className="text-gradient-premium" />
+            </h2>
+          </MotionReveal>
 
-        <FadeSection delay={0.2} className="text-center mb-12">
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my data analytics and business intelligence projects
-          </p>
-        </FadeSection>
+          <FadeSection delay={0.2} className="text-center mb-12">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-shadow-sm">
+              A showcase of my data analytics and business intelligence projects
+            </p>
+          </FadeSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
@@ -119,6 +120,7 @@ export const Projects = () => {
               </GlowCard>
             </TiltCard>
           ))}
+        </div>
         </div>
       </div>
     </section>

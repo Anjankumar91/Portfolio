@@ -51,17 +51,18 @@ export const Contact = () => {
       </div>
 
       <div className="container mx-auto max-w-4xl relative z-10">
-        <MotionReveal variant="dramatic" className="text-center mb-4">
-          <h2 className="text-4xl md:text-5xl font-bold">
-            <WordReveal text="Get In Touch" className="text-gradient-premium" />
-          </h2>
-        </MotionReveal>
+        <div className="section-content-overlay">
+          <MotionReveal variant="dramatic" className="text-center mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-shadow-md">
+              <WordReveal text="Get In Touch" className="text-gradient-premium" />
+            </h2>
+          </MotionReveal>
 
-        <FadeSection delay={0.2} className="text-center mb-12">
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            I'm always open to discussing new projects, opportunities, or just having a chat about data
-          </p>
-        </FadeSection>
+          <FadeSection delay={0.2} className="text-center mb-12">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-shadow-sm">
+              I'm always open to discussing new projects, opportunities, or just having a chat about data
+            </p>
+          </FadeSection>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {contactLinks.map((link, index) => (
@@ -128,6 +129,7 @@ export const Contact = () => {
             </GlowCard>
           </motion.div>
         </FadeSection>
+        </div>
       </div>
     </section>
   );
