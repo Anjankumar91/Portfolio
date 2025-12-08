@@ -67,9 +67,9 @@ void main() {
                                    0.02 * tOffset) +
                            sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
-  vec4 col = vec4(uColor, 1.0) * vec4(pattern) - rnd / 15.0 * uNoiseIntensity;
-  col.a = 1.0;
-  gl_FragColor = col;
+  vec3 col = uColor * pattern;   // multiply only the color by pattern
+  col = clamp(col, 0.0, 1.0);   // ensure RGB stays in range
+  gl_FragColor = vec4(col, 1.0); // final color
 }
 `;
 
