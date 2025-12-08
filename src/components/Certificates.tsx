@@ -111,7 +111,7 @@ export const Certificates = () => {
                     View Certificate
                   </a>
                   <p className="text-sm text-muted-foreground">
-                    {cert.skills.join(' | ')}
+                    {cert.skills.split('|')}
                   </p>
                 </div>
               </GlowCard>
