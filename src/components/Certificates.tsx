@@ -26,6 +26,20 @@ const certificates = [
     link: "https://www.credly.com/badges/4473b9fa-73f3-4c6a-923a-1e023f9c2f11",
     skills: ["Google Cloud", "Cloud Foundations", "Cloud Computing", "Data & ML", "Cloud Storage"]
   },
+  {
+    title: "Postman API Fundamentals Student Expert",
+    issuer: "Postman",
+    date: "2025",
+    link: "https://badgr.com/public/assertions/PpV8sqzLTSiwrm3AZe-NkQ?identity__email=venkatanjan91%40gmail.com",
+    skills: ["API", "Testing", "Scripting", "Postman"]
+  },
+  {
+    title: "Looker for Data Visualization-Beginners and Professionals",
+    issuer: "Udemy",
+    date: "2025",
+    link: "https://www.udemy.com/certificate/UC-3afd7f55-b5ea-4495-8228-84e07f1757ca/",
+    skills: ["Looker/Looker Studio", "Data Visualization", "Data Analysis", "Data Transformation"]
+  },
 ];
 
 export const Certificates = () => {
@@ -89,7 +103,10 @@ export const Certificates = () => {
                     {cert.issuer}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {cert.description}
+                    {cert.link}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {cert.skills}
                   </p>
                 </div>
               </GlowCard>
