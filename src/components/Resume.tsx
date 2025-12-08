@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { Download, FileText, ExternalLink } from "lucide-react";
-import Galaxy from "@/components/ui/galaxy";
+import Silk from "@/components/ui/silk";
 import { MotionReveal, MagneticHover, WordReveal, FadeSection, TiltCard } from "@/components/ui/motion-wrapper";
 import {
   Dialog,
@@ -26,13 +26,12 @@ export const Resume = () => {
   return (
     <section id="resume" className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <Galaxy 
-          mouseRepulsion={true}
-          mouseInteraction={true}
-          density={1.5}
-          glowIntensity={0.5}
-          saturation={0.8}
-          hueShift={240}
+        <Silk
+          speed={5}
+          scale={1}
+          color="#7B7481"
+          noiseIntensity={1.5}
+          rotation={0}
         />
       </div>
 
