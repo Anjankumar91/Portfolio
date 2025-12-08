@@ -36,6 +36,7 @@ uniform vec3  uColor;
 uniform float uSpeed;
 uniform float uScale;
 uniform float uRotation;
+uniform float uNoiseIntensity;
 
 vec2 rotateUvs(vec2 uv, float angle) {
     float c = cos(angle);
@@ -44,17 +45,23 @@ vec2 rotateUvs(vec2 uv, float angle) {
     return rot * uv;
 }
 
+float noise(vec2 texCoord) {
+    return fract(sin(dot(texCoord.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main() {
     vec2 uv = rotateUvs(vUv * uScale, uRotation);
     float tOffset = uSpeed * uTime;
 
     uv.y += 0.03 * sin(8.0 * uv.x - tOffset);
 
-    // Pattern modulates brightness slightly, but never negative
-    float pattern = 0.8 + 0.2 * sin(5.0 * (uv.x + uv.y + 0.02 * tOffset));
+    // silk pattern
+    float pattern = 0.6 + 0.4 * sin(5.0 * (uv.x + uv.y + 0.02 * tOffset)) 
+                    + 0.05 * noise(gl_FragCoord.xy) * uNoiseIntensity;
 
-    vec3 col = uColor * pattern;
-    col = clamp(col, 0.0, 1.0); // ensures color stays visible
+    // Multiply color by pattern, clamp to keep bright
+    vec3 col = uColor * clamp(pattern, 0.0, 1.0);
+
     gl_FragColor = vec4(col, 1.0);
 }
 `;
