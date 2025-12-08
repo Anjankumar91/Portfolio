@@ -102,9 +102,14 @@ export const Certificates = () => {
                   <p className="text-primary font-medium mb-3">
                     {cert.issuer}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <a 
+                    href={cert.link}
+                    className="text-sm text-muted-foreground"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={cert.link}>
                     {cert.link}
-                  </p>
+                  </a>
                   <p className="text-sm text-muted-foreground">
                     {cert.skills}
                   </p>
