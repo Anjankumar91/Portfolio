@@ -104,10 +104,9 @@ export const Certificates = () => {
                   </p>
                   <a 
                     href={cert.link}
-                    className="text-sm text-muted-foreground"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                    className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors">
                     View Certificate
                   </a>
                   <p className="text-sm text-muted-foreground">
