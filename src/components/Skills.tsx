@@ -42,11 +42,12 @@ export const Skills = () => {
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
-        <MotionReveal variant="dramatic" className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-center">
-            <WordReveal text="Skills & Expertise" className="text-gradient-premium" />
-          </h2>
-        </MotionReveal>
+        <div className="section-content-overlay">
+          <MotionReveal variant="dramatic" className="mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-center text-shadow-md">
+              <WordReveal text="Skills & Expertise" className="text-gradient-premium" />
+            </h2>
+          </MotionReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {skillCategories.map((category, categoryIndex) => (
@@ -79,6 +80,7 @@ export const Skills = () => {
               </GlowCard>
             </TiltCard>
           ))}
+        </div>
         </div>
       </div>
     </section>
