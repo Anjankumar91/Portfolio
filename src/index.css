@@ -98,9 +98,11 @@ All colors MUST be HSL.
     background-clip: text;
   }
 
-  /* Luxury glass effect - optimized (reduced blur for performance) */
+  /* Luxury glass effect */
   .glass-luxury {
-    background: hsl(222 47% 11% / 0.8);
+    background: hsl(222 47% 11% / 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid hsl(215 28% 25% / 0.5);
   }
 
@@ -117,8 +119,7 @@ All colors MUST be HSL.
   /* Smooth section transitions with performance optimization */
   section {
     position: relative;
-    contain: layout style paint;
-    transform: translateZ(0);
+    contain: layout style;
   }
 
   /* Performance optimization for animated backgrounds */
@@ -126,11 +127,6 @@ All colors MUST be HSL.
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
-  }
-
-  /* Hardware acceleration for canvas elements */
-  canvas {
-    transform: translateZ(0);
   }
 
   /* Reduce motion for users who prefer it */
@@ -257,5 +253,5 @@ section[id] {
 }
 
 .section-content-overlay {
-  @apply bg-background/50 rounded-2xl p-6 md:p-8;
+  @apply bg-background/40 backdrop-blur-sm rounded-2xl p-6 md:p-8;
 }

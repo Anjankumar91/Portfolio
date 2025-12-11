@@ -5,29 +5,45 @@ import { Github, Linkedin, Mail, FileText } from "lucide-react";
 import { renderCanvas } from "@/components/ui/canvas";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { ScrollIndicator, MagneticHover } from "@/components/ui/motion-wrapper";
+import DarkVeil from "@/components/ui/dark-veil";
+import Orb from "@/components/ui/orb";
+import LightPillar from "@/components/ui/light-pillar";
 
 export const Hero = () => {
   useEffect(() => {
     renderCanvas();
   }, []);
 
-  // Optimized animation variants (reduced complexity)
+  // Premium animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2,
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
     visible: {
       opacity: 1,
       y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
       transition: {
         duration: 0.6,
         ease: [0.25, 0.4, 0.25, 1] as const,
@@ -36,13 +52,13 @@ export const Hero = () => {
   };
 
   const socialVariants = {
-    hidden: { opacity: 0, y: 15 },
+    hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.8 + i * 0.08,
-        duration: 0.4,
+        delay: 1.2 + i * 0.1,
+        duration: 0.5,
         ease: [0.25, 0.4, 0.25, 1] as const,
       },
     }),
@@ -50,16 +66,46 @@ export const Hero = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
-      {/* Single optimized canvas background */}
+      {/* DarkVeil animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-30">
+        <DarkVeil speed={0.3} warpAmount={0.3} />
+      </div>
+      
+      {/* Orb animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <Orb 
+          hoverIntensity={0.5}
+          rotateOnHover={true}
+          hue={0}
+          forceHoverState={false}
+        />
+      </div>
+      
+      {/* LightPillar animated background layer */}
+      <div className="absolute inset-0 -z-10 opacity-50">
+        <LightPillar
+          topColor="#5227FF"
+          bottomColor="#FF9FFC"
+          intensity={1.0}
+          rotationSpeed={0.3}
+          glowAmount={0.005}
+          pillarWidth={3.0}
+          pillarHeight={0.4}
+          noiseIntensity={0.5}
+          pillarRotation={0}
+          interactive={false}
+          mixBlendMode="screen"
+        />
+      </div>
+      
       <canvas
         className="pointer-events-none absolute inset-0 z-0"
         id="canvas"
       ></canvas>
       
-      {/* Simple ambient glow - no WebGL */}
+      {/* Luxury ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[80px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
       </div>
 
       <motion.div 
