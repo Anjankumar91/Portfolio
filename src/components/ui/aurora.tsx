@@ -122,10 +122,20 @@ export default function Aurora(props: AuroraProps) {
   propsRef.current = props;
 
   const ctnDom = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const ctn = ctnDom.current;
     if (!ctn) return;
+
+    // Visibility observer to pause when not in view
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0, rootMargin: '100px' }
+    );
+    visibilityObserver.observe(ctn);
 
     const renderer = new Renderer({
       alpha: true,
@@ -177,8 +187,15 @@ export default function Aurora(props: AuroraProps) {
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
+    let lastTime = 0;
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
+      
+      // Skip rendering if not visible (throttle to ~30fps when visible)
+      if (!isVisibleRef.current) return;
+      if (t - lastTime < 33) return; // ~30fps cap
+      lastTime = t;
+      
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       if (program) {
         program.uniforms.uTime.value = time * speed * 0.1;
@@ -199,6 +216,7 @@ export default function Aurora(props: AuroraProps) {
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
+      visibilityObserver.disconnect();
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas);
       }

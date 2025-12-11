@@ -370,8 +370,33 @@ class Star {
 
 export function SpiralAnimation() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
     const animationRef = useRef<AnimationController | null>(null)
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+    const isVisibleRef = useRef(false)
+    
+    // Visibility observer to pause animation when not in view
+    useEffect(() => {
+        const container = containerRef.current
+        if (!container) return
+        
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisibleRef.current = entry.isIntersecting
+                if (animationRef.current) {
+                    if (entry.isIntersecting) {
+                        animationRef.current.resume()
+                    } else {
+                        animationRef.current.pause()
+                    }
+                }
+            },
+            { threshold: 0, rootMargin: '100px' }
+        )
+        
+        observer.observe(container)
+        return () => observer.disconnect()
+    }, [])
     
     useEffect(() => {
         const handleResize = () => {
@@ -393,7 +418,7 @@ export function SpiralAnimation() {
         const ctx = canvas.getContext('2d')
         if (!ctx) return
         
-        const dpr = window.devicePixelRatio || 1
+        const dpr = Math.min(window.devicePixelRatio || 1, 2) // Cap DPR for performance
         const size = Math.max(dimensions.width, dimensions.height)
         
         canvas.width = size * dpr
@@ -406,6 +431,11 @@ export function SpiralAnimation() {
         
         animationRef.current = new AnimationController(canvas, ctx, dpr, size)
         
+        // Start paused if not visible
+        if (!isVisibleRef.current) {
+            animationRef.current.pause()
+        }
+        
         return () => {
             if (animationRef.current) {
                 animationRef.current.destroy()
@@ -415,7 +445,7 @@ export function SpiralAnimation() {
     }, [dimensions])
     
     return (
-        <div className="relative w-full h-full">
+        <div ref={containerRef} className="relative w-full h-full">
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full"
