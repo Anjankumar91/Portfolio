@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useMemo, useRef, useLayoutEffect } from 'react';
-import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
+import React, { useMemo, useRef, useLayoutEffect, useEffect, useState } from 'react';
+import { Canvas, useFrame, useThree, extend, invalidate } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // Extend three.js classes for react-three-fiber
@@ -79,9 +79,10 @@ interface SilkPlaneProps {
   color: string;
   noiseIntensity: number;
   rotation: number;
+  isVisible: boolean;
 }
 
-const SilkPlane: React.FC<SilkPlaneProps> = ({ speed, scale, color, noiseIntensity, rotation }) => {
+const SilkPlane: React.FC<SilkPlaneProps> = ({ speed, scale, color, noiseIntensity, rotation, isVisible }) => {
   const { viewport } = useThree();
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
@@ -105,8 +106,9 @@ const SilkPlane: React.FC<SilkPlaneProps> = ({ speed, scale, color, noiseIntensi
   }, [viewport]);
 
   useFrame((_state, delta) => {
-    if (materialRef.current) {
+    if (materialRef.current && isVisible) {
       materialRef.current.uniforms.uTime.value += 0.1 * delta;
+      invalidate(); // Request next frame only when visible
     }
   });
 
@@ -141,16 +143,37 @@ const Silk: React.FC<SilkProps> = ({
   noiseIntensity = 1.5, 
   rotation = 0 
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: '100px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Canvas dpr={[1, 2]} frameloop="always">
-      <SilkPlane 
-        speed={speed}
-        scale={scale}
-        color={color}
-        noiseIntensity={noiseIntensity}
-        rotation={rotation}
-      />
-    </Canvas>
+    <div ref={containerRef} className="w-full h-full">
+      <Canvas dpr={[1, 1.5]} frameloop="demand">
+        <SilkPlane 
+          speed={speed}
+          scale={scale}
+          color={color}
+          noiseIntensity={noiseIntensity}
+          rotation={rotation}
+          isVisible={isVisible}
+        />
+      </Canvas>
+    </div>
   );
 };
 

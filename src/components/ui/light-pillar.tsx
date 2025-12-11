@@ -57,6 +57,16 @@ const LightPillar: React.FC<LightPillarProps> = ({
     const width = container.clientWidth;
     const height = container.clientHeight;
 
+    // Visibility observer
+    const isVisibleRef = { current: false };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0, rootMargin: '100px' }
+    );
+    observer.observe(container);
+
     const scene = new THREE.Scene();
     sceneRef.current = scene;
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -79,7 +89,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
     }
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap DPR
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -255,11 +265,16 @@ const LightPillar: React.FC<LightPillarProps> = ({
     }
 
     let lastTime = performance.now();
-    const targetFPS = 60;
+    const targetFPS = 30; // Reduced from 60 for better performance
     const frameTime = 1000 / targetFPS;
 
     const animate = (currentTime: number) => {
       if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+
+      rafRef.current = requestAnimationFrame(animate);
+      
+      // Skip if not visible
+      if (!isVisibleRef.current) return;
 
       const deltaTime = currentTime - lastTime;
 
@@ -269,8 +284,6 @@ const LightPillar: React.FC<LightPillarProps> = ({
         rendererRef.current.render(sceneRef.current, cameraRef.current);
         lastTime = currentTime - (deltaTime % frameTime);
       }
-
-      rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);
 
@@ -293,6 +306,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       if (interactive) {
         container.removeEventListener('mousemove', handleMouseMove);
       }

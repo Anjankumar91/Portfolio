@@ -116,9 +116,28 @@ All colors MUST be HSL.
     transform: translateY(-4px);
   }
 
-  /* Smooth section transitions */
+  /* Smooth section transitions with performance optimization */
   section {
     position: relative;
+    contain: layout style;
+  }
+
+  /* Performance optimization for animated backgrounds */
+  .animated-bg {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   /* Premium underline effect */
