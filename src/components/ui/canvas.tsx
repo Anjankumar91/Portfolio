@@ -116,6 +116,11 @@ Line.prototype = {
   },
 };
 
+let isVisible = true;
+let lastFrameTime = 0;
+const targetFPS = 30;
+const frameInterval = 1000 / targetFPS;
+
 // @ts-ignore
 function onMousemove(e) {
   function o() {
@@ -125,32 +130,51 @@ function onMousemove(e) {
   }
   // @ts-ignore
   function c(e) {
-    e.touches
-      ? // @ts-ignore
-        ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY))
-      : // @ts-ignore
-        ((pos.x = e.clientX), (pos.y = e.clientY)),
-      e.preventDefault();
+    if (e.touches) {
+      // @ts-ignore
+      pos.x = e.touches[0].pageX;
+      // @ts-ignore
+      pos.y = e.touches[0].pageY;
+    } else {
+      // @ts-ignore
+      pos.x = e.clientX;
+      // @ts-ignore
+      pos.y = e.clientY;
+    }
   }
   // @ts-ignore
   function l(e) {
     // @ts-ignore
-    1 == e.touches.length &&
-      ((pos.x = e.touches[0].pageX), (pos.y = e.touches[0].pageY));
+    if (e.touches.length === 1) {
+      pos.x = e.touches[0].pageX;
+      pos.y = e.touches[0].pageY;
+    }
   }
-  document.removeEventListener("mousemove", onMousemove),
-    document.removeEventListener("touchstart", onMousemove),
-    document.addEventListener("mousemove", c),
-    document.addEventListener("touchmove", c),
-    document.addEventListener("touchstart", l),
-    c(e),
-    o(),
-    render();
+  document.removeEventListener("mousemove", onMousemove);
+  document.removeEventListener("touchstart", onMousemove);
+  document.addEventListener("mousemove", c, { passive: true });
+  document.addEventListener("touchmove", c, { passive: true });
+  document.addEventListener("touchstart", l, { passive: true });
+  c(e);
+  o();
+  render();
 }
 
-function render() {
+function render(currentTime = 0) {
   // @ts-ignore
   if (ctx.running) {
+    // Skip if not visible or throttle framerate
+    if (!isVisible) {
+      window.requestAnimationFrame(render);
+      return;
+    }
+    
+    if (currentTime - lastFrameTime < frameInterval) {
+      window.requestAnimationFrame(render);
+      return;
+    }
+    lastFrameTime = currentTime;
+    
     // @ts-ignore
     ctx.globalCompositeOperation = "source-over";
     // @ts-ignore
@@ -190,8 +214,8 @@ var ctx,
   E = {
     debug: true,
     friction: 0.5,
-    trails: 80,
-    size: 50,
+    trails: 40, // Reduced from 80 for better performance
+    size: 30,   // Reduced from 50 for better performance
     dampening: 0.025,
     tension: 0.99,
   };
@@ -204,7 +228,11 @@ function Node() {
 
 export const renderCanvas = function () {
   // @ts-ignore
-  ctx = document.getElementById("canvas").getContext("2d");
+  const canvas = document.getElementById("canvas");
+  if (!canvas) return;
+  
+  // @ts-ignore
+  ctx = canvas.getContext("2d");
   ctx.running = true;
   ctx.frame = 1;
   f = new n({
@@ -213,10 +241,20 @@ export const renderCanvas = function () {
     frequency: 0.0015,
     offset: 285,
   });
-  document.addEventListener("mousemove", onMousemove);
-  document.addEventListener("touchstart", onMousemove);
+  
+  // Visibility observer for the canvas
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      isVisible = entry.isIntersecting;
+    },
+    { threshold: 0, rootMargin: '100px' }
+  );
+  observer.observe(canvas);
+  
+  document.addEventListener("mousemove", onMousemove, { passive: true });
+  document.addEventListener("touchstart", onMousemove, { passive: true });
   document.body.addEventListener("orientationchange", resizeCanvas);
-  window.addEventListener("resize", resizeCanvas);
+  window.addEventListener("resize", resizeCanvas, { passive: true });
   window.addEventListener("focus", () => {
     // @ts-ignore
     if (!ctx.running) {
