@@ -73,7 +73,7 @@ export const Contact = () => {
               tiltAmount={6}
               perspective={1000}
             >
-              <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 card-hover-glow glass-luxury">
+              <GlowCard customSize className="bg-card/95 w-full h-auto p-6 card-hover-glow glass-luxury">
                 <div className="col-span-full">
                   <a 
                     href={link.href}
@@ -112,7 +112,7 @@ export const Contact = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8 text-center glass-luxury">
+            <GlowCard customSize className="bg-card/95 w-full h-auto p-8 text-center glass-luxury">
               <div className="col-span-full">
                 <p className="text-muted-foreground mb-4">
                   Interested in collaborating or have a question?

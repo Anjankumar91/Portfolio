@@ -41,7 +41,7 @@ export const About = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8 glass-luxury">
+            <GlowCard customSize className="bg-card/95 w-full h-auto p-8 glass-luxury">
               <div className="col-span-full">
                 <LineReveal 
                   lines={paragraphs}

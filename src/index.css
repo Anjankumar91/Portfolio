@@ -64,10 +64,12 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   .gradient-hero {
@@ -98,11 +100,9 @@ All colors MUST be HSL.
     background-clip: text;
   }
 
-  /* Luxury glass effect */
+  /* Luxury glass effect - optimized for performance */
   .glass-luxury {
-    background: hsl(222 47% 11% / 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: hsl(222 47% 11% / 0.8);
     border: 1px solid hsl(215 28% 25% / 0.5);
   }
 
@@ -116,9 +116,11 @@ All colors MUST be HSL.
     transform: translateY(-4px);
   }
 
-  /* Smooth section transitions */
+  /* Smooth section transitions - GPU accelerated */
   section {
     position: relative;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   /* Premium underline effect */
@@ -234,5 +236,6 @@ section[id] {
 }
 
 .section-content-overlay {
-  @apply bg-background/40 backdrop-blur-sm rounded-2xl p-6 md:p-8;
+  @apply bg-background/50 rounded-2xl p-6 md:p-8;
+  transform: translateZ(0);
 }
