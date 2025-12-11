@@ -84,7 +84,7 @@ export const Certificates = () => {
               tiltAmount={8}
               perspective={1000}
             >
-              <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 card-hover-glow glass-luxury">
+              <GlowCard customSize className="bg-card/95 w-full h-auto p-6 card-hover-glow glass-luxury">
                 <div className="col-span-full">
                   <div className="flex items-start justify-between mb-4">
                     <motion.div

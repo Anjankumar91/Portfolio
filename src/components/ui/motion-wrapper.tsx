@@ -4,20 +4,18 @@ import { motion, Variants, HTMLMotionProps } from 'framer-motion';
 import { useScrollReveal } from '@/hooks/use-scroll-animation';
 import { ReactNode, forwardRef } from 'react';
 
-// Premium animation variants inspired by Apple/Rolex
+// Premium animation variants inspired by Apple/Rolex - optimized for performance
 export const fadeInUp: Variants = {
   hidden: { 
     opacity: 0, 
-    y: 60,
-    filter: 'blur(10px)',
+    y: 40,
   },
   visible: { 
     opacity: 1, 
     y: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.8,
-      ease: [0.25, 0.4, 0.25, 1], // Premium cubic-bezier
+      duration: 0.6,
+      ease: [0.25, 0.4, 0.25, 1],
     },
   },
 };
@@ -25,15 +23,13 @@ export const fadeInUp: Variants = {
 export const fadeInDown: Variants = {
   hidden: { 
     opacity: 0, 
-    y: -40,
-    filter: 'blur(8px)',
+    y: -30,
   },
   visible: { 
     opacity: 1, 
     y: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.7,
+      duration: 0.5,
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
@@ -42,15 +38,13 @@ export const fadeInDown: Variants = {
 export const fadeInScale: Variants = {
   hidden: { 
     opacity: 0, 
-    scale: 0.9,
-    filter: 'blur(12px)',
+    scale: 0.95,
   },
   visible: { 
     opacity: 1, 
     scale: 1,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.9,
+      duration: 0.6,
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
@@ -70,15 +64,13 @@ export const staggerContainer: Variants = {
 export const slideInLeft: Variants = {
   hidden: { 
     opacity: 0, 
-    x: -80,
-    filter: 'blur(8px)',
+    x: -60,
   },
   visible: { 
     opacity: 1, 
     x: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
@@ -87,35 +79,31 @@ export const slideInLeft: Variants = {
 export const slideInRight: Variants = {
   hidden: { 
     opacity: 0, 
-    x: 80,
-    filter: 'blur(8px)',
+    x: 60,
   },
   visible: { 
     opacity: 1, 
     x: 0,
-    filter: 'blur(0px)',
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
 };
 
-// Dramatic reveal for section titles
+// Dramatic reveal for section titles - simplified for performance
 export const dramaticReveal: Variants = {
   hidden: { 
     opacity: 0, 
-    y: 100,
-    scale: 0.8,
-    rotateX: 45,
+    y: 50,
+    scale: 0.95,
   },
   visible: { 
     opacity: 1, 
     y: 0,
     scale: 1,
-    rotateX: 0,
     transition: {
-      duration: 1,
+      duration: 0.7,
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
@@ -388,10 +376,10 @@ export const LineReveal = ({ lines, className, lineClassName, delay = 0, stagger
         <motion.div
           key={index}
           className={lineClassName}
-          initial={{ opacity: 0, x: -40, filter: 'blur(8px)' }}
-          animate={isInView ? { opacity: 1, x: 0, filter: 'blur(0px)' } : { opacity: 0, x: -40, filter: 'blur(8px)' }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
           transition={{
-            duration: 0.7,
+            duration: 0.5,
             delay: delay + index * staggerDelay,
             ease: [0.25, 0.4, 0.25, 1],
           }}
@@ -492,20 +480,16 @@ export const TiltCard = forwardRef<HTMLDivElement, TiltCardProps>(({
   const slideVariants: Variants = {
     hidden: {
       opacity: 0,
-      x: slideDirection === 'left' ? -100 : slideDirection === 'right' ? 100 : 0,
-      y: slideDirection === 'none' ? 60 : 0,
-      rotateY: slideDirection === 'left' ? -15 : slideDirection === 'right' ? 15 : 0,
-      filter: 'blur(10px)',
+      x: slideDirection === 'left' ? -60 : slideDirection === 'right' ? 60 : 0,
+      y: slideDirection === 'none' ? 40 : 0,
     },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
-      rotateY: 0,
-      filter: 'blur(0px)',
       transition: {
-        duration: 0.8,
-        delay: index * 0.15,
+        duration: 0.6,
+        delay: index * 0.1,
         ease: [0.25, 0.4, 0.25, 1],
       },
     },
