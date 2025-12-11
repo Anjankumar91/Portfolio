@@ -70,7 +70,7 @@ export const Projects = () => {
               tiltAmount={8}
               perspective={1200}
             >
-              <GlowCard customSize className="bg-card/95 w-full h-full p-6 card-hover-glow glass-luxury">
+              <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-full p-6 card-hover-glow glass-luxury">
                 <div className="col-span-full flex flex-col gap-4 h-full">
                   <div>
                     <h3 className="text-xl font-semibold mb-2">

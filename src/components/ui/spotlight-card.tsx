@@ -173,6 +173,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
           grid-rows-[1fr_auto] 
           shadow-[0_1rem_2rem_-1rem_black] 
           gap-4 
+          backdrop-blur-[5px]
           ${className}
         `}
       >

@@ -53,7 +53,7 @@ export const Resume = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <GlowCard customSize className="bg-card/95 w-full h-auto p-8 glass-luxury">
+            <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-8 glass-luxury">
               <div className="col-span-full flex flex-col items-center text-center space-y-6">
                 <motion.div 
                   className="p-4 bg-primary/10 rounded-full"

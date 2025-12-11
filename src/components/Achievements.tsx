@@ -68,7 +68,7 @@ export const Achievements = () => {
               tiltAmount={10}
               perspective={1000}
             >
-              <GlowCard customSize className="bg-card/95 w-full h-auto p-6 card-hover-glow glass-luxury text-center">
+              <GlowCard customSize className="bg-card/95 backdrop-blur-sm w-full h-auto p-6 card-hover-glow glass-luxury text-center">
                 <div className="col-span-full flex flex-col items-center">
                   <motion.div 
                     className="flex justify-center mb-4"

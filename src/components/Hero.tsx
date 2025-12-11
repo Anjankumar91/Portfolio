@@ -27,12 +27,13 @@ export const Hero = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
     visible: {
       opacity: 1,
       y: 0,
+      filter: 'blur(0px)',
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: [0.25, 0.4, 0.25, 1] as const,
       },
     },
